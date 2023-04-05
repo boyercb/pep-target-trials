@@ -1,0 +1,307 @@
+\documentclass[11pt]{article}
+
+\input{setup.tex}
+
+%\addbibresource{lipids.bib}
+
+\begin{document}
+
+\begin{appendix}
+
+    \renewcommand{\thefigure}{A\arabic{figure}}
+    \setcounter{figure}{0}
+    
+    \renewcommand{\thetable}{A\arabic{table}}
+    \setcounter{table}{0}
+    
+    \renewcommand{\theequation}{A\arabic{equation}}
+    \setcounter{equation}{0}
+
+%    \appendixwithtoc
+    \newpage
+
+    \section{Appendix}
+
+    \subsection{Grace period design}
+
+Another possibility is to specify a \textit{grace period}, i.e. a fixed time window in which vaccination can be initiated. For example, in a postexposure trial of a varicella vaccine, the investigators stipulated that sibling contacts of varicella case were ``were identified by their primary pediatrician and referred to our department \textit{within 72 hours} of the appearance of the first skin lesion'' in the index case. Under this design, the causal target would be the average vaccine effectiveness during the $\delta$ days of the grace period, i.e.
+$$
+\overline{VE}_\delta = 1 - \frac{\Pr[Y^{g(X,\delta)} = 1]}{\Pr[Y^{x > \Delta} = 1]}
+$$ 
+where
+\begin{gather*}
+    g(X,\delta): \text{get vaccinated within $\delta$ days of exposure under the expected vaccine } \\ \text{ administration pattern }  f^*(X \mid \overline{L}_t, X > t, T > t)
+\end{gather*}
+where, for instance, in the varicella trial $\delta = 3$. Importantly, implicit in this definition is that, when effectiveness varies by the time since exposure, as it most certainly does for most postexposure vaccines, such a design estimates the average effectiveness \textit{under the natural time course of vaccination}, $f^*(X \mid \overline{L}_t, X > t, T > t) = f(X \mid \overline{L}_t, X > t, T > t)$. This implies that two trials identical in all respects except for the distribution of vaccinations over the grace period could yield substantially different estimates. Therefore, a trialist pursuing this design has to strike a balance when defining a grace period between ensuring the period is short enough that benefit is immunologically possible and the trial is adequately powered, but also long enough that the regime is clinically feasible under reasonable assumptions about how quickly patients are notified of their exposure to a case and can access a vaccine in the real world. Properly conceived a grace period design can provide evidence about average effectiveness of postexposure vaccination administered within a certain window under real world conditions. As such it may be a more useful estimate for population planning or modeling studies than those produced by the stratified design above. When there's no effect modification by initiation or onset time, the average effectiveness is equal to $VE(t)$ standardized over the distribution of vaccine administration times during the grace period, i.e.
+$$\overline{VE}_\delta = \sum_{t = 1}^\delta VE(t) \times f^*_X(t \mid \overline{L}_t, X > t, T > t).$$
+
+    \subsection{Determining maximum postexposure vaccination delay}
+    In setting guidelines for postexposure vaccination, a common problem for practitioners and policymakers is to determine the maximum delay before efficacy falls below a certain threshold. Absent clear biology or immune response data, this can be difficult to determine empirically even when postexposure trials are possible as trial participants are generally only randomly assigned to vaccine or no vaccine/placebo not to a specific day. In this section, we suggest a method for estimating the maximum delay based on a pre-specified minimum efficacy bound. In principle, this method could be applied either in a randomized trial where the day of vaccination is not strictly controlled or in an observational emulation. 
+ 
+    Two thresholds:
+    \begin{enumerate}
+        \item At exposure day zero, what's the maximum delay time before efficacy drops below a certain threshold.
+        \item Conditional on surviving symptom free to that point, what's the last day that the efficacy of getting vaccinated versus not is above a minimum threshold.
+    \end{enumerate}
+    The second question is only relevant to people who have survived symptom free up, the first is probably better population-level guidance on how quickly people should try to get vaccinated 
+
+    To fix concepts, let 
+
+    We propose to estimate the parameters $\psi$ of the marginal structural model 
+    $$\Pr[D^{x}_{t+1} = 1 \mid \overline{D}^x_t = 0] =  \operatorname{expit}\{\psi_{0,t} + \psi_1 f(x) + \psi_2 f(x) t\}$$
+    where $f(x)$ is a flexible function of the day of vaccination such as a restricted cubic spline and $f(x)t$ is the product of $f(x)$ and time since postexposure
+    
+    $$VE^x(t) = 1 - \frac{\sum_{t=0}^\Delta \Pr[D^{x}_{t+1} = 1 \mid \overline{D}^x_t = 0] \prod_{j=0}^t\Pr[D^{x}_{j+1} = 0 \mid \overline{D}^x_j = 0]}{\sum_{t=0}^\Delta \Pr[D^{\infty}_{t+1} = 1 \mid \overline{D}^\infty_t = 0] \prod_{j=0}^t\Pr[D^{\infty}_{j+1} = 0 \mid \overline{D}^\infty_j = 0]}$$
+
+    $$\Pr[D^{a}_{t+1} = 1 \mid \overline{D}^a_t = 0, X = x] =  \operatorname{expit}\{\psi_{0}f(x + t) + \psi_1 a + \psi_2 a f(x + t) \}$$
+
+    \subsection{Example emulation from hypothetical dataset}
+
+
+    \begin{figure}[p]
+    \centering
+    \begin{tikzpicture}[> = stealth, shorten > = 1pt, auto, node distance = 1.5cm, thick]
+    
+    \node[circle,draw=none] (y0) {$Y$};
+    \node[circle,draw=none] (y1) [below of=y0] {$Y$};
+    \node[circle,draw=none] (y2) [below of=y1] {$Y$};
+    \node[circle,draw=none] (y3) [below of=y2] {$Y$};
+    \node[circle,draw=none] (d) [below of=y3] {\large $\vdots$};
+    \node[circle,draw=none] (y4) [below of=d] {$Y$};
+    \node[circle,draw=none] (y5) [below of=y4] {$Y$};
+
+    \node[circle,draw,minimum size =1cm] (a03) [left of=y0] {$1$};
+    \node[circle,draw,minimum size =1cm] (a02) [left of=a03] {$1$};
+    \node[circle,draw,minimum size =1cm] (a01) [left of=a02] {$1$};
+    \node[circle,draw,minimum size =1cm] (a0)  [left of=a01] {$1$};
+
+    \node[circle,draw,minimum size =1cm] (a13) [left of=y1] {$0$};
+    \node[circle,draw,minimum size =1cm] (a12) [left of=a13] {$0$};
+    \node[circle,draw,minimum size =1cm] (a11) [left of=a12] {$0$};
+    \node[circle,draw,minimum size =1cm] (a1)  [left of=a11] {$0$};
+
+    \node[regular polygon,regular polygon sides=4, draw,fill=gray!30,minimum size =1.25cm] (l0) [below left=0.01cm and 1.5cm of a0] {$ $};  
+    
+    \node[circle,draw=none] (day0) [left= 1cm of l0] {$t = 0$};
+
+    \path[->] (l0) edge node {} (a0);
+    \path[->] (l0) edge node {} (a1);
+    \path[->] (a0) edge node {} (a01);
+    \path[->] (a1) edge node {} (a11);
+
+    \path[->] (a11) edge node {} (a12);
+    \path[->] (a12) edge node {} (a13);
+    \path[->] (a13) edge node {} (y1);
+
+    \path[->] (a01) edge node {} (a02);
+    \path[->] (a02) edge node {} (a03);
+    \path[->] (a03) edge node {} (y0);
+
+    \node[circle,draw,minimum size =1cm] (a23) [left of=y2] {$1$};
+    \node[circle,draw,minimum size =1cm] (a22) [left of=a23] {$1$};
+    \node[circle,draw,minimum size =1cm] (a21) [left of=a22] {$1$};
+
+    \node[circle,draw,minimum size =1cm] (a33) [left of=y3] {$0$};
+    \node[circle,draw,minimum size =1cm] (a32) [left of=a33] {$0$};
+    \node[circle,draw,minimum size =1cm] (a31) [left of=a32] {$0$};
+
+    \node[regular polygon,regular polygon sides=4, draw,fill=gray!30,minimum size =1.25cm] (l11) [below left=0.01cm and 1.5cm of a21] {$ $};  
+    \node[regular polygon,regular polygon sides=4, draw,fill=gray!30,minimum size =1.25cm] (l10) [left of=l11] {$ $};  
+
+    \node[circle,draw=none] (day1) [left= 1cm of l10] {$t = 1$};
+
+    \path[->] (l11) edge node {} (a21);
+    \path[->] (l11) edge node {} (a31);
+
+    \path[->] (a21) edge node {} (a22);
+    \path[->] (a22) edge node {} (a23);
+    \path[->] (a23) edge node {} (y2);
+
+    \path[->] (a31) edge node {} (a32);
+    \path[->] (a32) edge node {} (a33);
+    \path[->] (a33) edge node {} (y3);
+
+    \node[circle,draw=none] (dd) [below of=a32] {\large $\ddots$};
+
+    \node[circle,draw=none] (dv) [left=4.1cm of dd] {\large $\vdots$};
+
+    \node[circle,draw,minimum size =1cm] (a43) [left of=y4] {$1$};
+
+    \node[circle,draw,minimum size =1cm] (a53) [left of=y5] {$0$};
+
+    \node[regular polygon,regular polygon sides=4, draw,fill=gray!30,minimum size =1.25cm] (l33) [below left=0.01cm and 1.5cm of a43] {$ $};  
+    \node[regular polygon,regular polygon sides=4, draw,fill=gray!30,minimum size =1.25cm] (l32) [left of=l33] {$ $};  
+    \node[regular polygon,regular polygon sides=4, draw,fill=gray!30,minimum size =1.25cm] (l31) [left of=l32] {$ $};  
+    \node[regular polygon,regular polygon sides=4, draw,fill=gray!30,minimum size =1.25cm] (l30) [left of=l31] {$ $};  
+
+    \node[circle,draw=none] (dayd) [left= 1cm of l30] {$t = \Delta$};
+
+    \path[->] (l33) edge node {} (a43);
+    \path[->] (l33) edge node {} (a53);
+
+    \path[->] (a43) edge node {} (y4);
+    \path[->] (a53) edge node {} (y5);
+
+    \end{tikzpicture}
+   
+    \caption{Schematic of nested daily trial design, on each day participants are randomly assigned to vaccine or no vaccine conditional on their history up to that day.}
+    \label{fig:design1}
+    \end{figure}
+
+    \clearpage
+
+    \begin{figure}[p]
+        \centering
+        \begin{tikzpicture}[> = stealth, shorten > = 1pt, auto, node distance = 1.5cm, thick]
+
+            \node[circle,draw=none] (y0) {$Y$};
+            \node[circle,draw=none] (y1) [below of=y0] {$Y$};
+            \node[circle,draw=none] (y2) [below of=y1] {$Y$};
+            \node[circle,draw=none] (y3) [below of=y2] {$Y$};
+            \node[circle,draw=none] (d) [below of=y3] {\large $\vdots$};
+            \node[circle,draw=none] (y4) [below of=d] {$Y$};
+            \node[circle,draw=none] (y5) [below of=y4] {$Y$};
+        
+            \node[circle,draw,minimum size =1cm] (a03) [left of=y0] {$1$};
+            \node[circle,draw,minimum size =1cm] (a02) [left of=a03] {$1$};
+            \node[circle,draw,minimum size =1cm] (a01) [left of=a02] {$1$};
+            \node[circle,draw,minimum size =1cm] (a0)  [left of=a01] {$1$};
+        
+            \node[circle,draw,minimum size =1cm] (a13) [left of=y1] {$0$};
+            \node[circle,draw,minimum size =1cm] (a12) [left of=a13] {$0$};
+            \node[circle,draw,minimum size =1cm] (a11) [left of=a12] {$0$};
+            \node[circle,draw,minimum size =1cm] (a1)  [left of=a11] {$0$};
+        
+            \node[regular polygon,regular polygon sides=4, draw,fill=gray!30,minimum size =1.25cm] (l0) [below left=0.01cm and 1.5cm of a0] {$ $};  
+            
+            \node[circle,draw=none] (day0) [left= 1cm of l0] {$\delta = 0$};
+        
+            \path[->] (l0) edge node {} (a0);
+            \path[->] (l0) edge node {} (a1);
+            \path[->] (a0) edge node {} (a01);
+            \path[->] (a1) edge node {} (a11);
+        
+            \path[->] (a11) edge node {} (a12);
+            \path[->] (a12) edge node {} (a13);
+            \path[->] (a13) edge node {} (y1);
+        
+            \path[->] (a01) edge node {} (a02);
+            \path[->] (a02) edge node {} (a03);
+            \path[->] (a03) edge node {} (y0);
+        
+            \node[circle,draw,minimum size =1cm] (a23) [left of=y2] {$1$};
+            \node[circle,draw,minimum size =1cm] (a22) [left of=a23] {$1$};
+            \node[circle,draw,minimum size =1cm] (a21) [left of=a22] {$1$};
+            \node[circle, draw, dashed, minimum size =1cm] (a20) [left of=a21] {$?$}; 
+    
+            \node[circle,draw,minimum size =1cm] (a33) [left of=y3] {$0$};
+            \node[circle,draw,minimum size =1cm] (a32) [left of=a33] {$0$};
+            \node[circle,draw,minimum size =1cm] (a31) [left of=a32] {$0$};
+            \node[circle, draw, dashed, minimum size =1cm] (a30) [left of=a31] {$?$};  
+     
+            \node[regular polygon,regular polygon sides=4, draw,fill=gray!30,minimum size =1.25cm] (l10) [below left=0.01cm and 1.5cm of a20] {$ $};  
+        
+            \node[circle,draw=none] (day1) [left= 1cm of l10] {$\delta = 1$};
+        
+    
+            \path[->] (l10) edge node {} (a20);
+            \path[->] (l10) edge node {} (a30);
+    
+            \path[->] (a20) edge node {} (a21);
+            \path[->] (a21) edge node {} (a22);
+            \path[->] (a22) edge node {} (a23);
+            \path[->] (a23) edge node {} (y2);
+    
+            \path[->] (a30) edge node {} (a31);
+            \path[->] (a31) edge node {} (a32);
+            \path[->] (a32) edge node {} (a33);
+            \path[->] (a33) edge node {} (y3);
+        
+            \node[circle,draw=none] (dd) [below of=a32] {\large $\ddots$};
+        
+            \node[circle,draw=none] (dv) [left=4.1cm of dd] {\large $\vdots$};
+        
+            \node[circle,draw,minimum size =1cm] (a43) [left of=y4] {$1$};
+            \node[circle, draw, dashed, minimum size =1cm] (a42) [left of=a43] {$?$};  
+            \node[circle, draw, dashed, minimum size =1cm] (a41) [left of=a42] {$?$};  
+            \node[circle, draw, dashed, minimum size =1cm] (a40) [left of=a41] {$?$};  
+    
+            \node[circle,draw,minimum size =1cm] (a53) [left of=y5] {$0$};
+            \node[circle, draw, dashed, minimum size =1cm] (a52) [left of=a53] {$?$};  
+            \node[circle, draw, dashed, minimum size =1cm] (a51) [left of=a52] {$?$};  
+            \node[circle, draw, dashed, minimum size =1cm] (a50) [left of=a51] {$?$};  
+    
+            % \node[regular polygon,regular polygon sides=4, draw,fill=gray!30,minimum size =1.25cm] (l33) [below left=0.01cm and 1.5cm of a43] {$ $};  
+            % \node[regular polygon,regular polygon sides=4, draw,fill=gray!30,minimum size =1.25cm] (l32) [left of=l33] {$ $};  
+            % \node[regular polygon,regular polygon sides=4, draw,fill=gray!30,minimum size =1.25cm] (l31) [left of=l32] {$ $};  
+            \node[regular polygon,regular polygon sides=4, draw,fill=gray!30,minimum size =1.25cm] (l30) [below left=0.01cm and 1.5cm of a40] {$ $};  
+        
+            \node[circle,draw=none] (dayd) [left= 1cm of l30] {$\delta = \Delta - 1$};
+        
+            \path[->] (l30) edge node {} (a40);
+            \path[->] (l30) edge node {} (a50);
+        
+            \path[->] (a40) edge node {} (a41);
+            \path[->] (a50) edge node {} (a51);
+            \path[->] (a41) edge node {} (a42);
+            \path[->] (a51) edge node {} (a52);
+            \path[->] (a42) edge node {} (a43);
+            \path[->] (a52) edge node {} (a53);
+            \path[->] (a43) edge node {} (y4);
+            \path[->] (a53) edge node {} (y5);
+    
+            \end{tikzpicture}
+            \caption{Schematic of trials with different grace periods, participants are randomized to a strategy starting on day zero and given a fixed length time window in which they can initiate and then sustain thereafter.}
+            \label{fig:design2}
+    \end{figure}
+
+    \clearpage 
+    \subsection{Example emulation from hypothetical dataset}
+
+    
+    \subsubsection{Grace period}
+
+    \begin{table}[p]
+        \small
+        \centering
+        \caption{Enrollment of six hypothetical individuals in trial with a 3-day grace period.\label{tab:example1}}
+        \begin{tabular}{cC{1in}C{1in}C{1.1in}C{1.2in}C{1in}}
+        \toprule
+        \makecell[c]{ID} & \makecell[c]{Vaccination \\ (1: yes, 0: no)} & \makecell[c]{Day of \\ vaccination} & \makecell[c]{Clinical disease \\ (1: yes, 0: no)} & \makecell[c]{Day of \\ symptom onset} & \makecell[c]{No. of regimes \\ followed} \\
+        \midrule
+            1 & 1 & 2 & 0 & - & 3 (0-2) \\
+            2 & 1 & 4 & 1 & 8 & 3 (0-2) \\
+            3 & 1 & 7 & 1 & 3 & 4 (0-3) \\
+            4 & 0 & - & 0 & - & 14 (0-13) \\
+            5 & 0 & - & 1 & 5 & 6 (0-5) \\
+            6 & 0 & - & 1 & 9 & 10 (0-9) \\
+        \bottomrule
+        \end{tabular}
+        \end{table}
+
+        
+    \subsubsection{Nested daily trials}
+
+    \begin{table}[p]
+        \small
+        \centering
+        \caption{Enrollment of six hypothetical individuals in daily nested trials for 14-day vaccination window based on observed data.\label{tab:example2}}
+        \begin{tabular}{cC{1in}C{1in}C{1.1in}C{1.2in}C{1in}}
+        \toprule
+        \makecell[c]{ID} & \makecell[c]{Vaccination \\ (1: yes, 0: no)} & \makecell[c]{Day of \\ vaccination} & \makecell[c]{Clinical disease \\ (1: yes, 0: no)} & \makecell[c]{Day of \\ symptom onset} & \makecell[c]{No. of trials \\ enrolled} \\
+        \midrule
+            1 & 1 & 2 & 0 & - & 3 (0-2) \\
+            2 & 1 & 4 & 1 & 8 & 5 (0-4) \\
+            3 & 1 & 7 & 1 & 3 & 4 (0-3) \\
+            4 & 0 & - & 0 & - & 14 (0-13) \\
+            5 & 0 & - & 1 & 5 & 6 (0-5) \\
+            6 & 0 & - & 1 & 9 & 10 (0-9) \\
+        \bottomrule
+        \end{tabular}
+        \end{table}
+    
+    
+\end{appendix}
+
+
+\end{document}
