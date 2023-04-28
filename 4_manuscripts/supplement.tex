@@ -446,7 +446,7 @@
     In this section, we present additional results from our simulation of stratgies to estimate postexposure vaccine efficacy. 
 
     \begin{itemize}
-        \item Tables \ref{tab:sim_results_rr} and \ref{tab:sim_results_hr} 
+        \item Tables \ref{tab:sim_results_rr} and \ref{tab:sim_results_hr} show the full simulation results for scenarios 1 and 2 when the efficacy is estimated using the risk ratio and the hazard ratio.
         \item Figure \ref{fig:sim_hetx} shows the performance of the estimation strategies outlined in the previous section when the vaccine efficacy varies with postexposure delay. 
         \item Figure \ref{fig:sim_hr} compares performance of the estimation strategies when efficacy is based on the hazard rather than the cumulative incidence of symptom onset.
         \item Figure \ref{fig:sim_overlap} shows how performance varies with the degree of overlap between vaccination and symptom onset. Specifically, we varied the mean of the log-normal distribution used to generate the symptom onset times, with larger means corresponding to later symptom onset and thus less overlap.
@@ -454,13 +454,13 @@
 
     \begin{table}[p]
         \centering
-        \caption{}\label{tab:sim_results_rr}
+        \caption{Simulation results for scenarios 1 and 2 when estimating VE using risk ratio}\label{tab:sim_results_rr}
         \input{../2_tables/sim_results_rr.tex}
     \end{table}
 
     \begin{table}[p]
         \centering
-        \caption{}\label{tab:sim_results_hr}
+        \caption{Simulation results for scenarios 1 and 2 when estimating VE using hazard ratio}\label{tab:sim_results_hr}
         \input{../2_tables/sim_results_hr.tex}
     \end{table}
 
@@ -469,13 +469,13 @@
     \begin{figure}[p]
         \centering
         \includegraphics{../3_figures/sim_hetx.pdf}
-        \caption{Heterogeneity .\label{fig:sim_hetx}}
+        \caption{Comparison of estimators under when vaccine efficacy varies by postexposure administration time.\label{fig:sim_hetx}}
     \end{figure}
 
     \begin{figure}[p]
         \centering
         \includegraphics{../3_figures/sim_hr.pdf}
-        \caption{Using the hazard ratio .\label{fig:sim_hr}}
+        \caption{Comparison of estimators when calculating vaccine efficacy using the hazard ratio instead of the risk ratio.\label{fig:sim_hr}}
     \end{figure}
 
     \begin{figure}[p]
