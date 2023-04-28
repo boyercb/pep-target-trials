@@ -1,0 +1,19 @@
+
+\begin{tabular}{lcccc}
+\toprule
+Estimator & Mean & Bias & SD & RMSE\\
+\midrule
+\addlinespace[0.3em]
+\multicolumn{5}{l}{\textit{Scenario 1: VE = 0\%}}\\
+\hspace{1em}naive, leave & 0.146 & 0.146 & 0.072 & 0.163\\
+\hspace{1em}naive, move & 0.192 & 0.192 & 0.068 & 0.203\\
+\hspace{1em}time-varying cox & -0.007 & -0.007 & 0.095 & 0.096\\
+\hspace{1em}target trial & -0.008 & -0.008 & 0.098 & 0.099\\
+\addlinespace[0.3em]
+\multicolumn{5}{l}{\textit{Scenario 2: VE = 40\%}}\\
+\hspace{1em}naive, leave & 0.456 & 0.056 & 0.052 & 0.077\\
+\hspace{1em}naive, move & 0.494 & 0.094 & 0.050 & 0.107\\
+\hspace{1em}time-varying cox & 0.395 & -0.005 & 0.065 & 0.066\\
+\hspace{1em}target trial & 0.400 & 0.000 & 0.067 & 0.067\\
+\bottomrule
+\end{tabular}
