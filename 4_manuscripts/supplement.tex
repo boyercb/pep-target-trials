@@ -13,7 +13,7 @@
 
     \section{Appendix}
 
-    \subsection{Day zero designs} \label{sec:dayzero}
+    \subsection{Day zero randomization designs} \label{sec:dayzero}
     In the main text, we discussed two trial designs starting on postexposure day zero. In the first, participants are enrolled on postexposure day zero, randomized, and immediately administered either vaccine or no vaccine with the goal of estimating the $\Delta$-day vaccine efficacy in the ideal case in which there is no delay between exposure and vaccination. Under perfect adherence this trial targets the estimand
     $$VE(0) = 1 - \frac{\Pr[Y^{x = 0} = 1]}{\Pr[Y^{x > \Delta} = 1]}$$
     which is likely an upper bound on vaccine efficacy under more plausible scenarios of delay. 
@@ -28,11 +28,11 @@
     $$
     VE_{T > t}(t) = 1 - \frac{\Pr[Y^{x = t} = 1 \mid X \geq t, T > t]}{\Pr[Y^{x > \Delta} = 1 \mid X \geq t, T > t]} \\
     $$
-    by comparing vaccine and no vaccine groups within enrollment  strata. Note that, in general, the $t$-specific vaccine efficacies, $VE_{T > t}(t)$, targeted in this trial will not be the same as the $VE(t)$ defined previously as they are conditional on presentation time and being symptom-free at enrollment. More often, in practice, the $t$-specific estimates $VE_{T > t}(t)$ are pooled together into a weighted average efficacy over the enrollment period. However, we stress caution in interpreting pooled estimates. Because participants are allowed to present naturally rather than being assigned a time at day zero, those that present earlier may be systematically different than those presenting later with respect to their risk of developing clinical disease. Therefore the pooled estimates are among a subpopulation who survive symptom-free and may not generalize to other populations with different propensities for delay. 
+    by comparing vaccine and no vaccine groups within enrollment strata. Note that, in general, the $t$-specific vaccine efficacies, $VE_{T > t}(t)$, targeted in this trial will not be the same as the $VE(t)$ defined previously as they are conditional on presentation time and being symptom-free at enrollment. More often, in practice, the $t$-specific estimates $VE_{T > t}(t)$ are pooled together into a weighted average efficacy over the enrollment period. However, we stress caution in interpreting pooled estimates. Because participants are allowed to present naturally rather than being assigned a time at day zero, those that present earlier may be systematically different than those presenting later with respect to their risk of developing clinical disease. Therefore the pooled estimates are among a subpopulation who survive symptom-free and may not generalize to other populations with different propensities for delay. 
 
-    \subsection{Grace period designs} \label{sec:graceperiod}
+    \subsection{Adding a grace period} \label{sec:graceperiod}
 
-    An alternative design which also allows for delays in vaccination is to specify a \textit{grace period}, i.e. a fixed time window after randomization in which vaccination can be initiated. For example, in a postexposure trial of a varicella vaccine, the investigators stipulated that sibling contacts of varicella case were ``were identified by their primary pediatrician and referred to our department \textit{within 72 hours} of the appearance of the first skin lesion'' in the index case. Under this design, the causal target would be the average vaccine effectiveness during the $\delta$ days of the grace period, i.e.
+    An alternative to the day zero design which also allows for delays in vaccination but doesn't require consideration of each delay regime is to specify a \textit{grace period}, i.e. a fixed time window after randomization in which vaccination can be initiated. For example, in a postexposure trial of a varicella vaccine, the investigators stipulated that sibling contacts of varicella case were ``were identified by their primary pediatrician and referred to our department \textit{within 72 hours} of the appearance of the first skin lesion'' in the index case. Under this design, the causal target would be the average vaccine effectiveness during the $\delta$ days of the grace period, i.e.
     $$
     \overline{VE}_\delta = 1 - \frac{\Pr[Y^{g(X,\delta)} = 1]}{\Pr[Y^{x > \Delta} = 1]}
     $$ 
@@ -40,7 +40,7 @@
     \begin{gather*}
         g(X,\delta): \text{get vaccinated within $\delta$ days of exposure under the expected vaccine } \\ \text{ administration pattern }  f^*(X \mid \overline{L}_t, X > t, T > t)
     \end{gather*}
-    where, for instance, in the varicella trial $\delta = 3$. Although in theory randomization could occur on any postexposure day followed by $\delta$-day grace period, in practice grace periods starting from randomization on day zero are probably the most relevant. When effectiveness varies by the time since exposure, as it most certainly does for most postexposure vaccines, a design with as grace design estimates the average effectiveness \textit{under the ``natural'' time course of vaccination}, $f^*(X \mid \overline{L}_t, X > t, T > t) = f(X \mid \overline{L}_t, X > t, T > t)$. This implies that two trials identical in all respects except for the distribution of vaccinations over the grace period could yield substantially different estimates. Therefore, a trialist pursuing this design has to strike a balance when defining a grace period between ensuring the period is short enough that benefit is immunologically possible and the trial is adequately powered, but also long enough that the regime is clinically feasible under reasonable assumptions about how quickly patients are notified of their exposure to a case and can access a vaccine in the real world. Properly conceived a grace period design can provide evidence about average effectiveness of postexposure vaccination administered within a certain window under real world conditions. As such it may be a more useful estimate for population planning or modeling studies than those produced by the stratified design above. When there's no effect modification by initiation or onset time, the average effectiveness is equal to $VE(t)$ standardized over the distribution of vaccine administration times during the grace period, i.e.
+    and where, for instance, in the varicella trial $\delta = 3$. Although in theory randomization could occur on any postexposure day followed by $\delta$-day grace period, in practice grace periods starting from randomization on day zero probably make the most sense. When effectiveness varies by the time since exposure, as it most certainly does for most postexposure vaccines, a design with as grace design estimates the average effectiveness \textit{under the ``natural''/observed time course of vaccination}, $f^*(X \mid \overline{L}_t, X > t, T > t) = f(X \mid \overline{L}_t, X > t, T > t)$. This implies that two trials identical in all respects except for the distribution of vaccinations over the grace period could yield substantially different estimates. Therefore, a trialist pursuing this design has to strike a balance when defining a grace period between ensuring the period is short enough that benefit is immunologically possible and the trial is adequately powered, but also long enough that the regime is clinically feasible under reasonable assumptions about how quickly patients are notified of their exposure to a case and can access a vaccine in the real world. Properly conceived a grace period design can provide evidence about average effectiveness of postexposure vaccination administered within a certain window under real world conditions. As such it may be a more useful estimate for population planning or modeling studies than those produced by the fixed enrollment period design above. When there's no effect modification by covariates, the average effectiveness is equal to $VE(t)$ standardized over the distribution of vaccine administration times during the grace period, i.e.
     $$\overline{VE}_\delta = \sum_{t = 1}^\delta VE(t) \times f^*_X(t \mid \overline{L}_t, X > t, T > t).$$
 
     \subsection{Additional emulation details} \label{sec:datamanip}
@@ -50,7 +50,7 @@
 
     When emulating a fixed enrollment period design, the problem is that participants in the observational data often meet the eligibility criteria at multiple time points, that is there is no uniquely defined time zero from which to start follow up. For instance, consider a postexposure vaccination trial in which participants are eligible anytime in the first 5 days after exposure if they have no previous vaccination history and no symptoms at presentation. In a real trial the participant would be enrolled and randomized on a particular day and that will be their time zero. In the observational data, a participant may meet these criteria continuously, for instance between days 0 and 4. The question is then when should their follow-up start? On day 0, 1, 2, 3, or 4? The choice has to be applied equivalently to vaccinated and unvaccinated participants to avoid \textit{immortal time bias}. One possibility is to randomly choose a start time among the days they are eligible. However, a more efficient choice is to use every eligible time by emulating a sequence of multiple nested target trials each with a different start. A natural choice for postexposure vaccination for a pathogen with a relatively short incubation period is to emulate a series of daily nested trials, i.e. on day zero condition on those who meet the eligibility criteria and compare those who are vaccinated on that day to those who are unvaccinated on that day, and then repeat on all days within the fixed enrollment period (schematic Figure \ref{fig:design1}). Participants in the observational study can be enrolled in trials starting on multiple days as long as they meet the eligibility criteria.
     
-    To demonstrate the required data manipulation steps, consider the six individuals shown in Table \ref{tab:example1} with vaccination and symptom onset times recorded during a hypothetical observational study. To emulate a trial with a fixed five day enrollment period postexposure, we create one copy of the dataset for each trial day. Then in each copy we apply the proper eligibility criteria (e.g. individuals should be disease-free and not vaccinated on a previous day) and assign those vaccinated on that trial day to be ``vaccinated'' and those who have not been vaccinated yet to be ``unvaccinated''. For example, individual 2 in Table \ref{tab:example1} is vaccinated on on day 2 and doesn't develop symptoms, therefore in the emulation they will participate in 3 trials (i.e. those starting on postexposure day 0, 1, and 2). In trials starting after postexposure day 2 they are no longer eligible because they have already been vaccinated. In each trial, follow up time is adjusted to start on the postexposure day of interest and end either at symptom onsent or at the maximum follow up day which may be fixed from the index exposure day or be of fixed length from the trial day. In per protocol analyses, individuals in each nested trial are censored when they deviate from their baseline assignment in that trial. For example, individual 3 in Table \ref{tab:example1} is unvaccinated in trials starting on days 0 through 3, but in each of these trials is censored on day 4 in the per protocol analysis because they deviate from their baseline assignment by becoming vaccinated.
+    To demonstrate the required data manipulation steps, consider the six individuals shown in Table \ref{tab:example1} with vaccination and symptom onset times recorded during a hypothetical observational study. To emulate a trial with a fixed five day enrollment period postexposure, we create one copy of the dataset for each trial day. Then in each copy we apply the proper eligibility criteria (e.g. individuals should be disease-free and not vaccinated on a previous day) and assign those vaccinated on that trial day to be ``vaccinated'' and those who have not been vaccinated yet to be ``unvaccinated''. For example, individual 2 in Table \ref{tab:example1} is vaccinated on on day 2 and doesn't develop symptoms, therefore in the emulation they will participate in 3 trials (i.e. those starting on postexposure day 0, 1, and 2). In trials starting after postexposure day 2 they are no longer eligible because they have already been vaccinated. In each trial, follow up time is adjusted to start on the postexposure day of interest and end either at symptom onsent or at the maximum follow up day which may be fixed from the index exposure day or be of fixed length from the trial day. In intention-to-treat analyses, participants are ``assigned'' based on their baseline status in the nested trial and followed throughout regardless of whether they later deviate. In per protocol analyses, individuals in each nested trial are censored when they deviate from their baseline assignment in that trial. For example, individual 3 in Table \ref{tab:example1} is unvaccinated in trials starting on days 0 through 3, but in each of these trials is censored on day 4 in the per protocol analysis because they deviate from their baseline assignment by becoming vaccinated.
     
     \begin{table}[t]
         \small
@@ -63,21 +63,21 @@
             1 & 1 & 0 & 0 & - & 1 (0) \\
             2 & 1 & 2 & 0 & - & 3 (0-2) \\
             3 & 1 & 4 & 1 & 8 & 5 (0-4) \\
-            4 & 1 & 7 & 1 & 3 & 4 (0-3) \\
+            4 & 1 & 7 & 1 & 2 & 4 (0-3) \\
             5 & 0 & - & 0 & - & 6 (0-5) \\
             6 & 0 & - & 1 & 5 & 6 (0-5) \\
         \bottomrule
         \end{tabular}
     \end{table}
 
-    Once we have completed the necesary data manipulation steps to emulate the nested sequence of trials, analysis of both the intent-to-treat and per-protocol effects of postexposure vaccination can be conducted as described in the main text. One approach would be to estimate the $t$-specific $VE_{T > t}(t)$ separately in each nested trial. However, this assumes we observe sufficient numbers of individuals receiving a vaccine on each day to obtain reliable estimates. In practice, we can increase efficiency by pooling across trials and fitting a model such as
+    Once we have completed the necessary data manipulation steps to emulate the nested sequence of trials, analysis of both the intent-to-treat and per-protocol effects of postexposure vaccination can be conducted as described in the main text. One approach would be to estimate the $t$-specific $VE_{T > t}(t)$ separately in each nested trial. However, this assumes we observe sufficient numbers of individuals receiving a vaccine on each day to obtain reliable estimates. In practice, we can increase efficiency by pooling across trials and fitting a model such as
     \begin{equation}\Pr[D_{t+1} = 1 \mid D_t = 0, X, Z, L_t] =  \operatorname{expit}\{\psi_0 \lambda(X + t) + \psi_1 Z f(X) + \psi_2 L_t\}
     \end{equation}\label{eqn:fixed}
     where $\lambda(X + t)$ is the unvaccinated odds of symptom onset,  $Z$ is an indicator of baseline ``assignment'' in the trial, $X$ is the postexposure day that the trial starts, $L_t$ is a vector of baseline covariates sufficient to ensure exchangeability at baseline, $t$ is follow up time counting from $X$, and $f(X)$ is a function of vaccination day. We can allow $f(X)$ and $\lambda(X + t)$ to be a member of a class of flexible such as restricted cubic splines. The $\widehat{VE}_{T > t}(t)$ curve can be estimated either from the hazard ratios or from standardized cumulative incidence curves depending on effect measure of interest. To estimate per protocol effects we censor participants when their data deviates from their ``assigned'' regime and then adjust for possible time-varying selection bias using any g-method such as inverse-probability of censoring weights. Additionally, because we are using the same participant in multiple nested trials our observations are no longer independent. Therefore appropriate adjustment to our standard errors is necessary to account for possible correlation across observations. Adjustment can be made either by using a cluster-robust variance estimator or the bootstrap. 
 
     When emulating a day zero trial in which participants are randomized to a particular delay, the problem is instead that participants in the observational data will have data consistent with multiple treatment regimes. Consider a trial where participants are randomized on day zero to one of the following strategies: (1) receive vaccine on day zero, (2) receive vaccine on day one, (3) receive vaccine on day two, (4) receive vaccine on day three, or (5) to receive no vaccine over the follow up period (schematic Figure \ref{fig:design2}). In a real trial participants would be assigned to one of the five regimes at the start. In the observational data, however, some individuals will get vaccinated on day 0 and therefore only have data compatible with the first strategy, but others will not get vaccinated on day zero and will have data compatible with multiple strategies at baseline. The question is now which strategy should we assign them to? As in the sequential design, one option is to pick a single strategy at random from the strategies their data is consistent with. However, again the more efficient choice is to assign them to all possible strategies by creating exact copies ---often called clones--- of each of these individuals in the dataset and assign each clone to a different strategy. 
 
-    To demonstrate the required data manipulation steps, let's return to the six hypothetical individuals from Table \ref{tab:example1}, but now in Table \ref{tab:example2} we will use their data to emulate a day zero trial in which participants are randomized to strategies (1)-(5) in previous paragraph. Starting with the first individual, they are vaccinated on day zero and therefore have data consistent only with strategy (1), thus they are not cloned. The second individual, however, is not vaccinated until day 2 and therefore at time zero they have data consistent with any of the strategies (1)-(5), thus we make five clones of the second individual by copying their data five times and assigning each observation to a different regime. We then follow each clone forward and censor them when they deviate from their assigned regime. For instance, we know the second individual is vaccinated on day 2, therefore on day 2 we censor all clones except the one assigned to strategy (3). Importantly, if the individual has symptoms before any clone is censored, as is the case for individual 4, then all clones will have symptoms and therefore the case is assigned to all strategies. This multiple allocation of events prevents the bias that could arise if events occurring during the delay period are systematically assigned to one of the five strategies only.
+    To demonstrate the required data manipulation steps, let's return to the six hypothetical individuals from Table \ref{tab:example1}, but now in Table \ref{tab:example2} we will use their data to emulate a day zero trial in which participants are randomized to strategies (1)-(5) in previous paragraph. Starting with the first individual, they are vaccinated on day zero and therefore have data consistent only with strategy (1), thus they are not cloned. The second individual, however, is not vaccinated until day 2 and therefore at time zero they have data consistent with any of the strategies (1)-(5), thus we make five clones of the second individual by copying their data five times and assigning each observation to a different regime. We then follow each clone forward and censor them when they deviate from their assigned regime. For instance, we know the second individual is vaccinated on day 2, therefore on day 0 we censor the clone assigned to strategy (1) because they were not vaccinated on that day. Likewise, on day 1 we censor the clone assigned to strategy (2) because they were not vaccinated on that day either, then on day 2 we censor all the remaining clones except the one assigned to strategy (3). Importantly, if the individual has symptoms before a clone is censored, as is the case for the strategy (3) and (4) clones for individual 4, then all clones will have symptoms and therefore the case is assigned to all strategies. This multiple allocation of events prevents the bias that could arise if events occurring during the delay period are systematically assigned to one of the five strategies only.
 
     \begin{table}[t]
         \small
@@ -90,7 +90,7 @@
             1 & 1 & 0 & 0 & - & 1 (1) \\
             2 & 1 & 2 & 0 & - & 5 (1-5) \\
             3 & 1 & 4 & 1 & 8 & 5 (1-5) \\
-            4 & 1 & 7 & 1 & 3 & 5 (1-5) \\
+            4 & 1 & 7 & 1 & 2 & 5 (1-5) \\
             5 & 0 & - & 0 & - & 5 (1-5) \\
             6 & 0 & - & 1 & 5 & 5 (1-5) \\
         \bottomrule
@@ -118,7 +118,7 @@
             1 & 1 & 0 & 0 & - & 1 (1) \\
             2 & 1 & 2 & 0 & - & 2 (1-2) \\
             3 & 1 & 4 & 1 & 8 & 2 (1-2) \\
-            4 & 1 & 7 & 1 & 3 & 2 (1-2) \\
+            4 & 1 & 7 & 1 & 2 & 2 (1-2) \\
             5 & 0 & - & 0 & - & 2 (1-2) \\
             6 & 0 & - & 1 & 5 & 2 (1-2) \\
         \bottomrule
@@ -182,7 +182,7 @@
     \node[circle,draw,minimum size =1cm] (a32) [left of=a33] {$0$};
     \node[circle,draw,minimum size =1cm] (a31) [left of=a32] {$0$};
 
-    \node[regular polygon,regular polygon sides=4, draw,fill=gray!30,minimum size =1.25cm] (l11) [below left=0.01cm and 1.5cm of a21] {$ $};  
+    \node[rectangle, draw,fill=gray!30,minimum height =0.7cm, minimum width = 0.8838835cm] (l11) [below left=0.01cm and 1.5cm of a21] {$ $};  
     \node[regular polygon,regular polygon sides=4, draw,fill=gray!30,minimum size =1.25cm] (l10) [left of=l11] {$ $};  
 
     \node[circle,draw=none] (day1) [left= 1cm of l10] {Trial $1$};
@@ -206,9 +206,9 @@
 
     \node[circle,draw,minimum size =1cm] (a53) [left of=y5] {$0$};
 
-    \node[regular polygon,regular polygon sides=4, draw,fill=gray!30,minimum size =1.25cm] (l33) [below left=0.01cm and 1.5cm of a43] {$ $};  
-    \node[regular polygon,regular polygon sides=4, draw,fill=gray!30,minimum size =1.25cm] (l32) [left of=l33] {$ $};  
-    \node[regular polygon,regular polygon sides=4, draw,fill=gray!30,minimum size =1.25cm] (l31) [left of=l32] {$ $};  
+    \node[rectangle,draw,fill=gray!30,minimum height =0.5cm, minimum width = 0.8838835cm] (l33) [below left=0.01cm and 1.5cm of a43] {$ $};  
+    \node[rectangle,draw,fill=gray!30,minimum height =0.6cm, minimum width = 0.8838835cm] (l32) [left of=l33] {$ $};  
+    \node[rectangle, draw,fill=gray!30,minimum height =0.7cm, minimum width = 0.8838835cm] (l31) [left of=l32] {$ $};  
     \node[regular polygon,regular polygon sides=4, draw,fill=gray!30,minimum size =1.25cm] (l30) [left of=l31] {$ $};  
 
     \node[circle,draw=none] (dayd) [left= 1cm of l30] { Trial $\delta$};
@@ -221,7 +221,7 @@
 
     \end{tikzpicture}
    
-    \caption{Schematic of nested daily trial design, on each day participants are assigned to vaccine or no vaccine, possibly conditional on their history up to that day. Squares represent a pool of participants eligible for randomization; circles represent the status of individuals who have been randomized. Time moves from left to right. }
+    \caption{Schematic of nested daily trial design, on each day participants are assigned to vaccine or no vaccine, conditional on their history up to that day. Squares represent a pool of participants eligible for randomization and get smaller to show that the size of the pool shrinks as the number of eligible participants decreases due to symptom onset and previous vaccination; circles represent the status of individuals who have been randomized. Time moves from left to right. }
     \label{fig:design1}
     \end{figure}
 
@@ -299,7 +299,7 @@
             \path[->] (a43) edge node {} (y4);
     
             \end{tikzpicture}
-            \caption{Schematic of trials in which participants are randomized on day zero to a specific vaccination delay strategy.}
+            \caption{Schematic of a trial in which participants are randomized on day zero to a specific vaccination delay strategy. In the figure, on day zero, participants are assigned to either (1) receive vaccine on day 0, (2) receive vaccine on day 1, (3) receive vaccine on day 2, (4) receive vaccine on day 3, or (5) do not receive vaccine during the follow up period, with assignment probabilities allowed to vary between strategies. This could also be done by first randomizing participants to vaccine or no vaccine and then randomizing the day of vaccination among those assigned vaccine.}
             \label{fig:design2}
     \end{figure}
 
@@ -355,7 +355,7 @@
         
     In observational emulations, we can similarly re-define vaccination outcomes based on biology, however we have to be careful to ensure that the new definitions are applied fairly across vaccination groups. In traditional analyses, bias can occur when all unvaccinated cases are counted from day zero but vaccinated cases are counted from the day of vaccination. This is fixed when using either the sequential daily trials or the clone-censor-weighting approaches described previously because time zero is properly aligned in both groups.
 
-    \subsection{Measures of vaccine efficacy}
+    \subsection{Measures of vaccine efficacy} \label{sec:effect_measures}
     In the main text, we defined vaccine efficacy in terms of the cumulative incidence of symptoms or disease over the follow up period, e.g.
     $$
     VE(t) = 1 - \frac{\Pr[Y^{x=t} = 1]}{\Pr[Y^{x > \Delta} = 1]}
@@ -441,7 +441,7 @@
 
     In each Monte Carlo simulation, we draw datasets of size 1000 from the process above under each efficacy scenario, estimated the $VE$ using the estimation strategies described, and repeated the process 1000 times. We calculate absolute and relative bias, mean squared error, and confidence interval coverage.
 
-    \subsection{Additional simulation results}
+    \subsection{Additional simulation results} \label{sec:add_simulation}
 
     In this section, we present additional results from our simulation of stratgies to estimate postexposure vaccine efficacy. 
 
