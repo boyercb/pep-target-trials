@@ -7,6 +7,7 @@
 \begin{document}
 
 \begin{titlepage}
+%TC:ignore
 \title{Defining and emulating target trials of the effects of postexposure vaccination using observational data}
 \author[1]{Christopher Boyer\thanks{email: \href{mailto:cboyer@hsph.harvard.edu}{cboyer@hsph.harvard.edu}}}
 \author[1]{Marc Lipsitch}
@@ -26,7 +27,6 @@ Postexposure vaccination has the potential to prevent or modify the course of cl
 \thispagestyle{empty}
 \end{titlepage}
 \pagebreak \newpage
-
 \doublespacing
 
 
@@ -34,6 +34,7 @@ Postexposure vaccination has the potential to prevent or modify the course of cl
 For a millenium or more humans have been inoculating healthy, unexposed individuals to prevent the onset of future disease \cite{plotkin2012vaccines}. Today, this remains the dominant paradigm for the development and mass administration of vaccines. By contrast, using vaccines to prevent clinical disease among those \textit{already exposed} to a pathogen, i.e. postexposure vaccination, remains an under-utilized strategy despite its potential to curb outbreaks and prevent the worst sequelae of disease \cite{gallagher_postexposure_2019}. This is due, in part, to the difficulty of running postexposure trials to establish vaccine efficacy, particularly during a larger outbreak. In these trials investigators must identify, randomize, and vaccinate participants all in the time window between exposure and symptom onset. Depending on the pathogen, this window can be incredibly compressed ---on the order of a few days to a week. Furthermore, vaccine effectiveness may be highly dependent upon the the time since exposure. Thus, even when trials are possible it can be difficult to compare effectiveness estimates across trials with different distributions of vaccination times or to infer an optimal postexposure window in which to vaccinate. Moreover, when there is other evidence to support effectiveness, for instance from pre-exposure trials or immunogenecity studies, and when other treatments are unavailable, a randomized postexposure trial may be considered unethical.
 
 In absence of trial data, an alternative approach is to use observational data to emulate the trial desired \cite{hernan_observational_2008,hernan_using_2016} (called a "target trial"), for instance by using electronic healthcare records from a large healthcare system or other passive surveillance systems, or by using public health contact tracing databases to define cohorts of individuals exposed to infection and comparing outcomes among those who do and do not receive post-exposure vaccination. In this paper, we define several target trials for assessing the effectiveness of postexposure vaccination depending on the causal quantity of interest. We also discuss the conditions under which such a trial can be emulated from observational data. We show how adopting a target trial framework can help clarify the causal question and resolve common biases in the analysis of postexposure efficacy using observational data through alignment of time zero, eligibility, and assignment as well as unambiguous definition of the treatment strategies being contrasted. We provide an example protocol for emulating a trial of a postexposure vaccine for mpox and illustrate some of the benefits of this approach through simulation.
+%TC:endignore
 
 \section{Design challenges: incubation period and timing of vaccination}
 Both the design of postexposure trials and attempts to emulate them using observational data are complicated by the interaction between the incubation period of the pathogen and the postexposure timing of vaccination. To provide benefit postexposure, a vaccine must stimulate an immune response faster, greater, or more specific than that provoked by natural infection alone. For example, in the case of smallpox, a vaccine administered within 72 hours after exposure to variola virus (the causative virus of smallpox) induces an antibody response 4 to 8 days earlier than the variola virus itself, most likely because the vaccine response bypasses the initial stages of natural infection in the respiratory tract, and thereby can prevent the onset of clinical disease \cite{massoudi_effectiveness_2003,keckler_effects_2013}. However, postexposure delays in receiving the vaccine, within certain limits, are often outside the control of investigators, as participants must first be notified of their exposure and present at a healthcare clinic prior to receiving a vaccine. 
@@ -409,10 +410,12 @@ As shown in our simulation, some issues related to immortal time bias could be r
 \clearpage
 
 \newpage
+%TC:ignore
 
 \printbibliography
 
 \input{supplement.tex}
+%TC:endignore
 
 \onehalfspacing
 
