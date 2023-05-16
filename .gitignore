@@ -52,3 +52,7 @@ vignettes/*.pdf
 *.docx
 
 *.DS_Store
+
+keya.*
+
+5_presentations/
