@@ -1,0 +1,395 @@
+\documentclass[11pt]{article}
+
+\input{setup}
+
+\addbibresource{pep.bib}
+
+\begin{document}
+%TC:ignore
+\begin{titlepage}
+\title{Defining and emulating target trials of the effects of postexposure vaccination using observational data}
+\author[1]{Christopher Boyer\thanks{email: \href{mailto:cboyer@hsph.harvard.edu}{cboyer@hsph.harvard.edu}}}
+\author[1,2]{Marc Lipsitch}
+\affil[1]{Department of Epidemiology, Harvard T.H. Chan School of Public Health, Boston, MA.}
+\affil[2]{Department of Immunology and Infectious Diseases, Harvard T.H. Chan School of Public Health, Boston, MA.}
+\date{\today}
+\maketitle
+
+\begin{abstract}
+Postexposure vaccination has the potential to prevent or modify the course of clinical disease among those exposed to a pathogen. However, due to logistical constraints, postexposure vaccine trials have been difficult to implement in practice. In place of trials, investigators have used observational data to estimate the effectiveness or optimal timing window for postexposure vaccines, but the relationship between these analyses and those that would be conducted in a trial is often unclear. Here, we define several possible target trials for postexposure vaccination and show how, under certain conditions, they can be emulated using observational data. We emphasize the importance of the incubation period and the timing of vaccination in trial design and emulation. As an example, we specify a protocol for postexposure vaccination against mpox and provide a step-by-step description of how to emulate it using data from a healthcare database or contact tracing program. We further illustrate some of the benefits of the target trial approach through simulation.
+\noindent \\
+\vspace{0in} \\
+\noindent\textbf{Suggested Keywords:} target trial, vaccines, immortal time bias, effectiveness, monkeypox, postexposure prophylaxis, infectious disease \\
+\end{abstract}
+\setcounter{page}{0}
+\thispagestyle{empty}
+\end{titlepage}
+\pagebreak \newpage
+\doublespacing
+%TC:endignore
+
+
+\section{Introduction} \label{sec:introduction}
+For a millennium or more humans have been inoculating healthy, unexposed individuals to prevent the onset of future disease \cite{plotkin2012vaccines}. Today, this remains the dominant paradigm for the development and mass administration of vaccines. By contrast, using vaccines to prevent clinical disease among those \textit{already exposed} to a pathogen, i.e. postexposure vaccination, remains an under-utilized strategy despite its potential to curb outbreaks and prevent the worst sequelae of disease \cite{gallagher_postexposure_2019}. This is due, in part, to the difficulty of running postexposure trials, particularly during a large outbreak, as investigators must identify, randomize, and vaccinate participants all in the, often short, time window between exposure and symptom onset. Even when these trials are feasible, the effectiveness of a postexposure vaccine is likely to vary dramatically based on the time elapsed since exposure, which can make it difficult to compare estimates across trials with different distributions of vaccination times. Finally, when there is other evidence to support effectiveness, and when other treatments are unavailable, a randomized postexposure trial may be considered unethical.
+
+In the absence of trial data, an alternative approach is to use observational data to emulate the trial desired \cite{hernan_observational_2008,hernan_using_2016} (called a ``target trial''), for instance by using electronic healthcare records or public health contact tracing databases to define cohorts of individuals exposed to infection and comparing outcomes among those who do and do not receive post-exposure vaccination. In this paper, we define several target trials for assessing the effectiveness of postexposure vaccination depending on the causal quantity of interest (Note, in a slight abuse of terminology we refer to vaccine effectiveness rather than efficacy throughout, even when the target trial itself could reasonably be called an efficacy trial because, ultimately, the observational data used for the emulation are collected under real world conditions). We also discuss the conditions under which a trial can be emulated from observational data. We show how the target trial framework can help clarify the causal question and resolve common biases in the observational analysis of postexposure effectiveness through alignment of time zero, eligibility, and assignment as well as an unambiguous definition of the treatment strategies being contrasted. We provide an example protocol for emulating a trial of a postexposure vaccine for mpox and illustrate some of the benefits of this approach through simulation.
+
+\section{Design challenges: incubation period and timing of vaccination}
+The success of postexposure prophylactic vaccination is determined by two competing forces: the incubation period of the pathogen and how long it takes to receive a vaccine. To provide benefit postexposure, a vaccine must stimulate an immune response faster, greater, or more specific than that provoked by natural infection alone. For example, in the case of smallpox, a vaccine administered within 72 hours after exposure to the variola virus (the causative virus of smallpox) induces an antibody response 4 to 8 days earlier than the variola virus itself, most likely because the vaccine response bypasses the initial stages of natural infection in the respiratory tract \cite{massoudi_effectiveness_2003,keckler_effects_2013}. However, delays in receiving a vaccine are common as participants must first either recognize or be notified of their exposure and then present at a healthcare clinic where a vaccine is available. 
+
+The resulting overlap between the timing of vaccination and the timing of symptom onset creates several design challenges (see Figure \ref{fig:illustration1}). First, the effectiveness of a vaccine may vary substantially depending on how quickly participants can be vaccinated postexposure (top panel, Figure \ref{fig:illustration1}). In a randomized trial, the protocol specifies the precise vaccination strategy to be evaluated and must strike a balance between existing exposure identification, enrollment, and care coordination systems and what is known about the biology governing the natural course of infection. This can be difficult when the incubation period or mechanism of action of a postexposure vaccine are not well established. Under these circumstances, longer delays may be permitted with a secondary goal to infer the optimal postexposure window to administer the vaccine. In an observational setting, by contrast, the protocol for vaccine timing is often less clear or may even be absent, in which case the vaccination strategy being evaluated may be ambiguous.
+
+Second, when vaccination is delayed there is also the possibility that some participants may have already developed symptoms prior to enrollment or vaccination. A vaccine can prevent symptoms only if administered before those symptoms start. However, when those who have symptoms at enrollment are excluded, this has implications for the population to which estimates can be generalized, as the design implicitly conditions on those who survive symptom free. When they are included, they may attenuate estimates of vaccine effectiveness relative to an ideally conducted trial as presumably vaccination post symptom onset is ineffective at preventing illness. In a trial, because eligibility is assessed prior to randomization, participants can be screened independent of their vaccination strategy and thus effect estimates remain unbiased. However, in an observational study this event is observed only among those who are vaccinated and therefore bias may result if they are differentially excluded.
+
+Finally, another challenge specific to observational studies is the lack of an unambiguous assignment to a vaccination strategy at time zero \cite{hernan_how_2018}. In a trial, participants are explicitly assigned to either vaccine or no vaccine (or placebo) at the time of enrollment and prospectively followed. By contrast, in an observational study, a participant's vaccination strategy is often defined retrospectively by what they do (or do not do) over the follow up period (middle panel, Figure \ref{fig:illustration1}). When there are delays in receiving a vaccine, this creates the possibility of bias due to \textit{immortal time} among the vaccinated as they have survived symptom-free long enough to become vaccinated \cite{suissa_immortal_2008}, whereas the unvaccinated are defined independently of their survival time. 
+
+In a trial, the challenges posed by overlap between when vaccines are received and the incubation period can be addressed through careful design and a clear protocol, for instance by specifying a window in which people are eligible to be vaccinated, screening based on uniform criteria at enrollment, and having unified time zero for all strategies. In an observational study, these fixes are often unavailable. However, these challenges can still be resolved through careful consideration of the trial that one would like to perform, but cannot, and then attempting to emulate it in the observational data (bottom panel, Figure \ref{fig:illustration1}).
+
+%TC:ignore
+\begin{figure}[p]
+    \centering
+    \begin{tikzpicture}
+        \begin{axis}[
+          no markers, domain=0:15, samples=100,
+          axis lines*=left, xlabel=day, ylabel=$ $,
+          title={Symptom onset times},
+          height=5.5cm, width=15cm,
+          xtick={1,2,3,4,5,6,7,8,9,10,11,12,13,14,15}, ytick=\empty,
+          enlargelimits=false, clip=false, axis on top,
+          grid = none, name=onset
+          ]
+          \addplot [draw=none, fill=blue!20] {lnormal(1.75,0.33)}\closedcycle;
+          \addplot [very thick, blue!50!black] {lnormal(1.75,0.33)};
+        %   \addplot [draw=none, fill=orange!20] {gammapdf(4, 1)}\closedcycle;
+        %   \addplot [very thick, orange!50!black] {gammapdf(4, 1)};
+          \addplot [very thick, red] {0.222 / (1 + exp(0.9 * (x - 4)))};
+          \node[red] at (axis cs: 2.65,0.2) {$VE(t)$};
+        \end{axis}
+        \begin{axis}[
+          at=(onset.below south west),
+          anchor=north west,
+          yshift=-1.3cm,
+          domain=0:15, samples=100,
+          axis lines*=left, xlabel=$\text{day}$, ylabel=$ $,
+          title={Observational study},
+          height=5.5cm, width=15cm, ymin=0, ymax=13,
+          xtick={1,2,3,4,5,6,7,8,9,10,11,12,13,14,15}, ytick=\empty,
+          enlargelimits=false, clip=false, axis on top,
+          grid=none, y axis line style={draw=none},name=obs
+          ]
+          \addplot[mark=none,line width=1.2pt,dashed]
+          coordinates {(0,12)(4,12)};
+          \addplot[mark=none,line width=1.2pt]
+          coordinates {(4,12)(15,12)};
+          \addplot[mark=none,line width=1.2pt,dashed]
+          coordinates {(0,11)(1,11)};
+          \addplot[mark=none,line width=1.2pt]
+          coordinates {(1,11)(15,11)};
+          \addplot[mark=none,line width=1.2pt,dashed]
+          coordinates {(0,10)(3,10)};
+          \addplot[mark=none,line width=1.2pt]
+          coordinates {(3,10)(15,10)};
+          \addplot[mark=none,line width=1.2pt,dashed]
+          coordinates {(0,9)(2,9)};
+          \addplot[mark=none,line width=1.2pt]
+          coordinates {(2,9)(15,9)};
+          \addplot[mark=none,line width=1.2pt,dashed]
+          coordinates {(0,8)(5,8)};
+          \addplot[mark=none,line width=1.2pt]
+          coordinates {(5,8)(15,8)};
+          
+          \addplot[mark=none,line width=1.2pt]
+          coordinates {(0,6)(15,6)};
+          \addplot[mark=none,line width=1.2pt]
+          coordinates {(0,5)(15,5)};
+          \addplot[mark=none,line width=1.2pt]
+          coordinates {(0,4)(15,4)};
+          \addplot[mark=none,line width=1.2pt]
+          coordinates {(0,3)(15,3)};
+          \addplot[mark=none,line width=1.2pt]
+          coordinates {(0,2)(15,2)};
+          \addplot[
+            mark=*,
+            only marks,
+            mark size=3pt
+            ]
+            coordinates {
+            (4,12)(1,11)(3,10)(2,9)(5,8)(0,6)(0,5)(0,4)(0,3)(0,2)
+          };
+          \addplot[
+            mark=text,
+            text mark=$\boldsymbol{\times}$,
+            text mark as node,
+            text mark style={%
+                font=\large
+            },
+            only marks,
+            mark size=5pt
+            ]
+            coordinates {
+            (7,8)(5,10)(2,5)(9,3)(4,4)
+          };
+          \node[] at (axis cs: 15.35,12) {\scriptsize V};
+          \node[] at (axis cs: 15.35,11) {\scriptsize V};
+          \node[] at (axis cs: 15.35,10) {\scriptsize V};
+          \node[] at (axis cs: 15.35,9) {\scriptsize V};
+          \node[] at (axis cs: 15.35,8) {\scriptsize V};
+
+          \node[] at (axis cs: 15.35,6) {\scriptsize C};
+          \node[] at (axis cs: 15.35,5) {\scriptsize C};
+          \node[] at (axis cs: 15.35,4) {\scriptsize C};
+          \node[] at (axis cs: 15.35,3) {\scriptsize C};
+          \node[] at (axis cs: 15.35,2) {\scriptsize C};
+
+        \end{axis}
+        \begin{axis}[
+            at=(obs.below south west),
+            anchor=north west,
+            yshift=-1.3cm,
+            domain=0:15, samples=100,
+            axis lines*=left, xlabel=$\text{day}$, ylabel=$ $,
+            title={Target trial emulation},
+            height=5.5cm, width=15cm, ymin=0, ymax=13,
+            xtick={1,2,3,4,5,6,7,8,9,10,11,12,13,14,15}, ytick=\empty,
+            enlargelimits=false, clip=false, axis on top,
+            grid=none, y axis line style={draw=none}
+            ]
+            \addplot[mark=none,line width=1.2pt,dashed]
+            coordinates {(0,12)(1,12)};
+            \addplot[mark=none,line width=1.2pt]
+            coordinates {(1,12)(15,12)};
+            \addplot[mark=none,line width=1.2pt,dashed]
+            coordinates {(0,9.75)(2,9.75)};
+            \addplot[mark=none,line width=1.2pt]
+            coordinates {(2,9.75)(15,9.75)};
+            \addplot[mark=none,line width=1.2pt,dashed]
+            coordinates {(0,7.5)(3,7.5)};
+            \addplot[mark=none,line width=1.2pt]
+            coordinates {(3,7.5)(15,7.5)};
+            \addplot[mark=none,line width=1.2pt,dashed]
+            coordinates {(0,5.25)(4,5.25)};
+            \addplot[mark=none,line width=1.2pt]
+            coordinates {(4,5.25)(15,5.25)};
+            \addplot[mark=none,line width=1.2pt,dashed]
+            coordinates {(0,3)(5,3)};
+            \addplot[mark=none,line width=1.2pt]
+            coordinates {(5,3)(15,3)};
+            
+            \addplot[mark=none,line width=1.2pt,dashed]
+            coordinates {(0,11)(1,11)};
+            \addplot[mark=none,line width=1.2pt]
+            coordinates {(1,11)(15,11)};
+            \addplot[mark=none,line width=1.2pt,dashed]
+            coordinates {(0,8.75)(2,8.75)};
+            \addplot[mark=none,line width=1.2pt]
+            coordinates {(2,8.75)(15,8.75)};
+            \addplot[mark=none,line width=1.2pt,dashed]
+            coordinates {(0,6.5)(3,6.5)};
+            \addplot[mark=none,line width=1.2pt]
+            coordinates {(3,6.5)(15,6.5)};
+            \addplot[mark=none,line width=1.2pt,dashed]
+            coordinates {(0,4.25)(4,4.25)};
+            \addplot[mark=none,line width=1.2pt]
+            coordinates {(4,4.25)(15,4.25)};
+            \addplot[mark=none,line width=1.2pt,dashed]
+            coordinates {(0,2)(5,2)};
+            \addplot[mark=none,line width=1.2pt]
+            coordinates {(5,2)(15,2)};
+            \addplot[
+              mark=*,
+              only marks,
+              mark size=3pt
+              ]
+              coordinates {
+              (1,12)(2,9.75)(3,7.5)(4,5.25)(5,3)(1,11)(2,8.75)(3,6.5)(4,4.25)(5,2)
+            };
+            \addplot[
+            mark=text,
+            text mark=$\boldsymbol{\times}$,
+            text mark as node,
+            text mark style={%
+                font=\large
+            },
+            only marks,
+            mark size=5pt
+            ]
+            coordinates {
+            (7,3)(5,7.5)(2,11)(9,4.25)(4,8.75)
+          };
+            \node[] at (axis cs: 15.35,12) {\scriptsize V};
+            \node[] at (axis cs: 15.35,11) {\scriptsize C};
+            \node[] at (axis cs: 15.35,9.75) {\scriptsize V};
+            \node[] at (axis cs: 15.35,8.75) {\scriptsize C};
+            \node[] at (axis cs: 15.35,7.5) {\scriptsize V};
+            \node[] at (axis cs: 15.35,6.5) {\scriptsize C};
+            \node[] at (axis cs: 15.35,5.25) {\scriptsize V};
+            \node[] at (axis cs: 15.35,4.25) {\scriptsize C};
+            \node[] at (axis cs: 15.35,3) {\scriptsize V};
+            \node[] at (axis cs: 15.35,2) {\scriptsize C};
+          \end{axis}
+    \end{tikzpicture}
+    \caption{Illustration of the challenges of evaluating postexposure vaccination using observational data. The top panel shows the distribution of symptom onset times among cases as well as vaccine effectiveness as a function of postexposure day of administration for a hypothetical pathogen. The middle panel shows an observational study with 5 vaccinated (V) and 5 unvaccinated (C) individuals in which there are delays in receiving vaccines. Dots show the time exposure status is first defined and Xs show symptom onset. The dashed line represents possible immortal time among vaccinated who have to survive symptom free long enough to be vaccinated. The bottom panel shows a nested sequence of daily trials among the same individuals in which there is no immortal time bias because the timing of enrollment and exposure assignment coincides in each trial.}
+    \label{fig:illustration1}
+\end{figure}
+
+%TC:endignore
+
+\section{Specifying the target trial}
+
+\subsection{Set up and notation} \label{sec:setup}
+We consider the emulation of a target trial designed to estimate the effect of postexposure vaccine therapy on the $\Delta$-day risk of clinical disease. The time index $t$ denotes days since exposure to a case. We have available observational data $O=\left(L_0, A_0, D_1 \ldots, L_{\Delta-1}, A_{\Delta-1}, D_{\Delta}, X^*, T^*\right)$ on participants, where $L_t$ is a set of time-varying covariates and $L_0$ includes all covariates prior to time zero (i.e. pre-exposure). We define the following variables:
+$$X: \text{ day of vaccine administration, } X^* = \operatorname{min}(X, \Delta) \text{ where } X \in \mathbb{N}+$$
+$$T: \text{ day of clinical disease onset, } T^* = \operatorname{min}(T, \Delta) \text{ where } T \in \mathbb{N}+$$
+$$A_t: \text{ indicator of vaccination status on day }t, A_t \in \{0, 1\}$$
+$$D_t: \text{ indicator of clinical disease on day $t$, } D_t \in \{0, 1\}$$
+Note that under these definitions, when $X < x$ then $A_x = 1$ and $T < \Delta$ implies $D_{\Delta} = 1$. We bin both vaccination time and symptom onset time into days since exposure and administratively censor after $\Delta$ days postexposure (i.e. those unvaccinated during follow up have $X = \Delta$ and those without clinical disease have $T = \Delta$). The trial outcome $Y$ is the development of clinical disease within $\Delta$ days postexposure, i.e. $Y=D_{\Delta}$. For clarity, we make a few simplifying assumptions, although extensions that relax them are possible. First, we assume that the vaccine itself does not cause mild symptoms that can be mistaken for clinical disease. Second, we assume that the timing of the primary exposure event is measured without error and unambiguously defined. Third, we assume the goal of postexposure vaccination is the prevention of clinical disease in those exposed rather than reduction in disease severity or risk of further transmission, although in both cases the conceptualization of the target trial may be similar.
+
+\subsection{Possible trial designs}
+
+Under the theory that the earlier a vaccine is administered postexposure the better, the ideal causal quantity of interest, in terms of maximizing effectiveness, is likely
+$$VE(0) = 1 - \frac{\Pr[Y^{x = 0} = 1]}{\Pr[Y^{x > \Delta} = 1]}$$
+where $Y^{x = 0}$ is a counterfactual indicator of symptoms within $\Delta$ days under \textit{immediate} postexposure vaccination on day 0 and $Y^{x > \Delta}$ is the counterfactual outcome under no vaccination over follow up (Note, using our definition of time-varying treatment $A_t$, we could alternatively write this as $VE(0) = 1 - \Pr[Y^{\overline{a}_{K} = 1} = 1]/\Pr[Y^{\overline{a}_{K} = 0} = 1]$ where $K = \Delta - 1$). In a randomized controlled trial with perfect adherence, this quantity could be estimated by recruiting eligible participants immediately postexposure, randomizing them to receive vaccine or no vaccine, and comparing $\Delta$-day incidence of symptoms in the two groups (we discuss estimating vaccine effectiveness based on the hazard ratio rather than cumulative incidence in section \ref{sec:effect_measures} of the Appendix). 
+
+Alternatively, if the goal was to estimate vaccine effectiveness by day, we could imagine a design in which participants are still enrolled immediately postexposure and randomized to vaccine or no vaccine, but then further randomly assigned a day that they are to receive a vaccine. In this case our casual contrast of interest is the $t$-specific vaccine effectiveness
+$$VE(t) = 1 - \frac{\Pr[Y^{x = t} = 1]}{\Pr[Y^{x > \Delta} = 1]}.$$
+Such a design permits the estimation of the maximum delay window beyond which population effectiveness falls below a minimum threshold (see section \ref{sec:maxdelay} of the Appendix). However, several challenges prevent both trials from being conducted in practice. Most importantly, the timing of enrollment and vaccination are rarely within the control of the investigator due to delays in identifying those exposed, referring them to care, and accessing a vaccine. Even if these delays were reduced in a controlled environment, that setting may not reflect how vaccines are actually administered in clinical practice and therefore less informative about real world effectiveness.
+
+Another design, which allows participants to present ``naturally'', is to specify a fixed time window that participants are eligible for enrollment and randomize them on the postexposure day they present. Given that length of delay is likely a strong determinant of effectiveness, we could improve efficiency by blocking eligible participants on the postexposure day they present. Such a design targets the $t$-specific vaccine effectiveness among those presenting symptom-free, i.e.
+$$
+VE_{T > t}(t) = 1 - \frac{\Pr[Y^{x = t} = 1 \mid X \geq t, T > t]}{\Pr[Y^{x > \Delta} = 1 \mid X \geq t, T > t]}
+$$
+by comparing vaccine and no vaccine groups within enrollment strata. Note that, in general, the $t$-specific vaccine efficacies, $VE_{T > t}(t)$, will not be the same as the $VE(t)$ defined previously as they are conditional on surviving symptom-free. Because participants are allowed to present naturally, those that present earlier may be systematically different than those presenting later with respect to their risk of developing clinical disease. Indeed, $VE(t)$ and $VE_{T > t}(t)$ will only coincide when there is no effect modification by enrollment day or symptom onset time, which are both implausible. Absent this, the two measures of VE answer fundamentally different policy questions. The first, $VE(t)$, answers: \textit{at the time of exposure} how effective would a vaccine be if administered after a $t$-day delay? The second, $VE_{T > t}(t)$, answers the question: \textit{given that an individual presents symptom-free on day $t$}, how effective would receiving a vaccine now be versus not? 
+
+A final design possibility is to enroll participants immediately but allow a \textit{grace period} \cite{smith_emulation_2022,wanis_role_2022}, i.e. a fixed time window after randomization in which vaccination can be initiated. We discuss designs that allow for a grace period further in section \ref{sec:graceperiod} of the Appendix.
+%For example, in a postexposure trial of a varicella vaccine \cite{mor_efficacy_2004}, the investigators stipulated that sibling contacts of a varicella case were ``were identified by their primary pediatrician and referred to our department \textit{within 72 hours} of the appearance of the first skin lesion'' in the index case. 
+
+\subsection{Example protocol for a target trial of a postexposure Mpox vaccine}
+
+To illustrate a postexposure trial emulation, here we outline a protocol for a target trial to evaluate the effectiveness of the JYNNEOS vaccine as postexposure prophylaxis against development of symptomatic mpox infection. For simplicity, we focus on a single design: a trial with a fixed enrollment period in which participants are randomized on the postexposure day they present.
+
+The human mpox virus (MPXV) is an orthopox virus and related to the virus that causes smallpox. In April 2022, an outbreak of mpox occurred in several countries prompting the World Health Organization to declare a public health emergency of international concern \cite{nuzzo_who_2022}. A two-dose live replicating vaccine for smallpox and mpox (MVA-BN), licensed as JYNNEOS\textsuperscript{TM}, was approved by the Food and Drug Administration (FDA) in 2019. During the outbreak, the vaccine was offered as postexposure prophylaxis to contacts of confirmed mpox cases. In guidance documents, the U.S. Centers for Disease Control and Prevention (CDC) recommended that unvaccinated people exposed to the mpox virus be vaccinated with a first vaccine dose against mpox within 4 days of exposure for the greatest likelihood of preventing disease \cite{cdc_mpox_2023-1}, though also suggested there may still be benefit to vaccination within 14 days of exposure \cite{kecmanovic1975einfluss,sommer_1972_1974}. Licensure of JYNNEOS was supported by animal studies \cite{earl_rapid_2008,keckler_effects_2013,hatch_assessment_2013,samuelsson_survival_2008} and immunogenicity studies \cite{pittman_phase_2019} but to date no trial data on the postexposure effectiveness of the vaccine against mpox exists. Therefore, an emulation of a postexposure trial using observational data may provide useful evidence for setting policy.
+
+Table \ref{tab:protocol} gives an overview of the target trial protocol to estimate $VE_{T>t}$. In Appendix section \ref{sec:trial_spec}, we provide further description of each component of the protocol.
+
+%TC:ignore
+\begin{table}[p]
+    \small
+    \centering
+    \caption{Example protocol for the specification and emulation of a target trial of postexposure vaccination for prevention of mpox.\label{tab:protocol}}
+    \begin{threeparttable}
+    \begin{tabular}{>{\raggedright\arraybackslash}p{2.5cm}>{\raggedright\arraybackslash}p{7.75cm}>{\raggedright\arraybackslash}p{5cm}}
+        \toprule
+        Protocol component & Target trial specification & Emulation \\
+        \midrule
+        Eligibility & \makecell*[t{{>{\raggedright\arraybackslash}p{7.5cm}}}]{
+            High\textsuperscript{a} or intermediate\textsuperscript{b} risk exposure to a PCR-confirmed mpox case within the first 14 days postexposure AND negative PCR for mpox or orthopox virus at enrollment AND no symptoms AND no prior history of JYNNEOS vaccination } & same \\
+            & & \\
+        Treatment strategies & \makecell*[t{{>{\raggedright\arraybackslash}p{7.5cm}}}]{
+            (1) JYNNEOS vaccination immediately upon enrollment \\
+            (2) no JYNNEOS vaccination during 21 days postexposure} & same  \\
+        & & \\
+        Treatment assignment & non-blinded 1:1 random assignment to either (1) or (2) at enrollment & same but randomization is emulated by conditioning on covariates \\
+        & & \\
+        Outcomes & 21-day cumulative incidence of  disease defined as symptom onset and PCR-confirmed mpox or orthopox & same \\
+        & & \\
+        Follow up & Start at exposure date and follow until clinical disease onset, loss to follow up, or 21 days have elapsed, whichever is first & same  \\
+        & & \\
+        Causal contrast & \makecell*[t{{>{\raggedright\arraybackslash}p{7.5cm}}}]{Intention to treat (ITT)\\ Per protocol} & observational analog of per protocol effect  \\
+        & & \\
+        Statistical analysis & \makecell*[t{{>{\raggedright\arraybackslash}p{7.5cm}}}]{ITT: compare cumulative incidence of clinical disease under each strategy, adjusting for loss to follow up and prognostic factors to increase efficiency \\ 
+        \\ Per protocol: Use IPW/g-formula/ g-estimation to account for non-adherence.} &  same as per protocol  \\
+        \bottomrule
+    \end{tabular}
+    \begin{tablenotes}
+        \item[a] \textit{High risk:} direct mucosal or broken skin contact with lesions or bodily fluids OR any sexual or intimate mucosal contact OR indirect mucosal or broken skin contact with lesions or bodily fluids via linens, clothing, or other materials.
+        \item[b] \textit{Intermediate risk:} unmasked exposure to respiratory droplets (within 6 ft for $>$3 hours) OR direct contact between intact skin and lesions or bodily fluids OR indirect contact between intact skin and lesions or bodily fluids via linens, clothing, or other materials OR indirect contact between exposed individual's clothing with linens or bodily fluids.
+    \end{tablenotes}
+\end{threeparttable}
+\end{table}
+%TC:endignore
+
+\section{Emulating postexposure trials}
+Once the target trial is specified, we can attempt to emulate it using observational data. Emulating a postexposure vaccination trial will generally require linking high quality case and contact surveillance with clinical databases or registries recording vaccinations as well as intensive post vaccination symptom monitoring. Here, we outline how to emulate the main components of the target trial as well as common challenges, using the JYNNEOS vaccine example to help ground our discussion. Additional details on the identifiability conditions and specific data manipulation and estimation steps necessary to emulate all trial designs discussed above are available in the Appendix (sections \ref{sec:identifiability} - \ref{sec:estimation}).
+
+\subsubsection*{Eligibility}
+Ideally, eligibility criteria in the emulation should match those in the target trial. In particular, this means we cannot include restrictions based on post-baseline events (e.g. ``exclude those vaccinated more than 15 days after exposure or those vaccinated after symptoms'') as these may introduce bias and would be unavailable at baseline in the target trial. Additional challenges may arise because there is no direct contact with participants at enrollment. Rather we must rely on routinely collected data which may not be fit-for-purpose. For instance, we may have to assume that those without a previous vaccination in the electronic medical records database did not receive a vaccine from a different healthcare system.
+
+More broadly, when emulating postexposure trials, determining eligibility requires knowing who is actually at risk of infection. This means proper classification of those exposed to an index case is needed as well as an accurate history of vaccination or previous infection and screening for symptoms or PCR-positivity at enrollment. Infection history may be spotty if it mostly consists of prior recorded infections unless the pathogen is novel or invades a mostly naive population. Vaccination history may come from medical records or vaccination registries. Ideally, contacts of the index case would all be offered PCR testing upon notification of exposure and then enrolled in active symptom tracking, such as through daily phone calls or text messages, as this would prevent differential eligibility assessments of vaccinated and unvaccinated participants. However, in practice, investigators may have to assume that the lack of a positive PCR test and/or no passive symptom report constitutes no infection at time eligibility is assessed in the emulation.
+
+\subsubsection*{Treatment strategies}
+The vaccination strategies to be emulated should also match those in the target trial. As participants in observational data sets will almost always be aware of their treatment strategy, the trial emulated will typically be a pragmatic (unblinded) trial. To emulate a target trial, we identify individuals in the database who meet all of the eligibility criteria. We then assign them to the strategy or strategies that are consistent with their observed data at baseline.
+
+To properly ``assign'' participants to strategies in the emulation, accurate data on the postexposure timing of vaccination is necessary. This will also allow us to censor them when they deviate from their assigned protocol. In order to identify the unvaccinated, we must inevitably assume that those without vaccinations recorded in a registry or health records truly did not receive a vaccine during follow up. This may be a problem if participants can receive care from sources not covered by study data. 
+
+Another challenge is that, to properly define regimes, the exposure date should be accurate and unambiguously defined. The accuracy of exposure information may depend on the salience of the event and the ability of index cases or their contacts to recall interactions. An unambiguous definition requires a detailed description of what constitutes possibly infectious contact informed by the underlying biology. In our mpox example, this description comes from guidance published by the CDC, but may not be as clear for other pathogens. Participants may also be exposed multiple times or over an extended duration, in which case determining which time to set as the definitive exposure date may be less clear. As a sensitivity analysis we might consider multiple alternative definitions.
+
+\subsubsection*{Assignment procedures}
+In the emulation, allocation to treatment strategies is assumed to be random conditional on a sufficient set of covariates to control confounding. For postexposure vaccination against mpox this may include time since exposure, risk level of contact with index case, calendar week, geographic region, age, sex, gender, coexisting conditions affecting immune system (e.g. HIV or STIs, obesity, cancer, immune suppressing therapies), and proxies for healthcare utilization (e.g. flu vaccination, outpatient visits, HIV-PrEP).
+
+In practice, our ability to correctly estimate effects will depend on the conditional randomization assumption, at least approximately, holding (equivalent to assuming that there is little residual confounding). If those who access postexposure vaccines are those with higher risk exposures to mpox or with weaker immune systems (along some dimension not captured by the covariates) then we will likely underestimate the true effectiveness of the vaccine. On the other hand, if those who access postexposure vaccines are healthier and more likely to engage in healthy behaviors more broadly (again along dimensions not captured by the covariates), then we will likely overestimate the true effectiveness of the vaccine. The availability of rich covariate information on participants as well as deep subject matter knowledge about the determinants of both who gets vaccinated and the clinical course of disease are essential.
+
+While direct verification of this assumption is not possible, several design and analytic strategies can limit or quantify the bias that would result from violations. One strategy is to identify possible negative outcome controls \cite{chua_use_2020,lipsitch_negative_2010-1}, that is outcomes where confounding structure is expected to be similar but are plausibly unaffected by vaccination. For instance, routine visits for other conditions may be a proxy for unmeasured health-seeking behaviors or testing positive for syphilis may be a proxy for unmeasured high-risk sexual behavior.  Another strategy is to conduct a sensitivity analysis to quantify the potential bias by evaluating change in estimated effect across a plausible range of parameter values dictating the strength of unmeasured confounding \cite{robins_sensitivity_2000}. 
+
+\subsubsection*{Outcome}
+Outcome definitions and measurements should be as similar to those in the target trial as possible. In a postexposure vaccine trial, there is often a regular system for monitoring of symptoms over the follow up period. In an observational emulation, this data may be passively collected, leaving the opportunity for potential outcome missclassification, particularly when there is a mild form of the disease which may go unnoticed or unreported or when participants may seek care from providers not covered by study data sources. This may be less of a concern when cases are reportable or the pathogen is novel. Existing symptom monitoring systems may be in place as part of contact tracing and testing systems in which case they can be leveraged. Ideally, ascertainment of symptoms would be blind to an individual's vaccination status. If those who are vaccinated are better surveilled or use passive systems more frequently this could introduce bias. 
+
+\subsubsection*{Causal contrast}
+In theory the contrasts will be the same as in the target trial, although in some instances a corollary of the intention-to-treat effect may not be estimable from the observational data. Here, we focus on the per-protocol \cite{hernan_per-protocol_2017} analysis of $VE_{T > t}$.
+
+\subsubsection*{Statistical analysis}
+Compared to the analyses in the target trial, the analyses in the emulation are complicated by two factors. First, randomization is assumed to only hold conditional on covariates. Therefore our analysis must include an appropriate method of adjustment such as outcome regression, matching, inverse-probability weighting, or a combination thereof. 
+
+Second, unlike in a trial, in an emulation the assigned strategy at baseline is not known, rather it must be inferred from the observed data. In particular, participants are not assigned to vaccine or no vaccine at time zero. To avoid immortal time bias, we need to choose a start of follow up in the emulation in a way that ensures that the distribution of time since exposure is the same in both groups \cite{hernan2016specifying}. In the fixed enrollment period design, this can be accomplished via emulating nested daily sequential trials: starting from exposure date, each day we identify participants who are eligible to participate (e.g. no prior vaccination or mpox infection) and assign those receiving a vaccine on that day to the vaccine strategy and those who do not receive a vaccine on that day to the no vaccine strategy (see Appendix section \ref{sec:datamanip}). In this setup, unvaccinated participants will be eligible to serve as controls in multiple trials until they receive a vaccine or develop symptoms. To estimate per protocol effects, we censor participants when their data deviates from their ``assigned'' regime and then adjust for possible time-varying selection bias using any g-method such as inverse-probability of censoring weights. Additionally, because we are using the same participant in multiple nested trials our observations are no longer independent. Therefore, appropriate adjustment to our standard errors is necessary to account for possible correlation across observations. Adjustment can be made either by using a cluster-robust variance estimator or the bootstrap.  
+
+\section{Simulation}\label{sec:simulation}
+%TC:ignore
+\begin{figure}[t]
+  \centering
+  \includegraphics{../../../../3_figures/dist.pdf}
+  \caption{Distribution of simulated vaccination times ($X^*$) among vaccinated and symptom onset times ($T^*$) among cases when $VE = 0$ over the 21 days of follow up showing the degree of overlap.}
+  \label{fig:example_overlap}
+\end{figure}
+%TC:endignore
+
+To demonstrate the benefits of the target trial approach, we simulated data from hypothetical observational study under a known data generation process in which there is an overlap between vaccination timing and the timing of symptom onset (full details in section \ref{sec:simulation_appendix} of the Appendix). Figure \ref{fig:example_overlap} shows an example of the overlap in the distribution of simulated vaccination times and disease onset times when $VE = 0$. We used this setup to compare explicit emulation of a target trial with a few common estimation strategies drawn from the literature. Specifically, we compare the following strategies:
+    \begin{enumerate}
+        \item \textit{naive, leave} - a simple comparison of the ``ever vaccinated'' and ``never vaccinated'' using the relative risk regression model $\Pr[Y = 1 \mid X] = \operatorname{exp}\{\beta_0 + \beta_1 I(X < 21)\}$ with vaccine effectiveness estimated as $\widehat{VE} = 1 - \exp(\widehat{\beta_1})$.
+        \item \textit{naive, move} - re-classify those who receive vaccine after developing symptoms  as ``unvaccinated'', i.e. we use the relative risk regression model $\Pr[Y = 1 \mid X] = \operatorname{exp}\{\beta_0 + \beta_1 I(X < T)\}$ where $I(X<T)$ implies only those who receive vaccine prior to symptom onset are ``vaccinated'' with vaccine effectiveness again estimated as $\widehat{VE} = 1 - \exp(\widehat{\beta_1})$.
+        \item \textit{target trial} - we emulate a sequence of nested daily trials as described above and in section \ref{sec:datamanip} of the Appendix. In each trial, we censor participants when they deviate from their assigned strategy at baseline and use inverse-probability of censoring weights to adjust for selection bias. These nested trials are combined, and vaccine effectiveness is estimated using standardized cumulative incidence curves from a pooled logistic regression.
+    \end{enumerate}
+    
+In Figure \ref{fig:sim_results} we compare estimates of $VE$ to the truth across two scenarios: the first when the true $VE = 0\%$ and the second when the true $VE = 31.6\%$. Under the null, the naive approaches are upwardly biased due to immortal time bias (i.e. by definition vaccinated have to survive long enough to be vaccinated while unvaccinated are at risk at all time points), while the target trial approaches yield valid estimates. This persists in scenario 2 where $VE = 31.6\%$, although the relative bias of the first approach is somewhat offset by the fact that those vaccinated after developing symptoms are included with vaccinated. In the appendix, we also compare estimation strategies when $VE$ varies with timing of vaccination (Figure \ref{fig:sim_hetx}), when effectiveness is defined as one minus the hazard ratio and/or a time-varying cox model is used (Figure \ref{fig:sim_hr}), and when the degree of overlap between vaccination and symptom onset is varied (Figure \ref{fig:sim_overlap}). Of note, in this simple scenario both the target trial emulation approach and the time-varying cox model yielded unbiased estimates of VE when defined as one minus the hazard ratio.
+
+%TC:ignore
+
+\begin{figure}[t]
+  \centering
+  \includegraphics{../../../../3_figures/sim_rr.pdf}
+  \caption{Simulated $VE$ estimates compared to the truth for the three estimation strategies described in section \ref{sec:simulation}. Based on 1000 monte carlo simulations. Dashed line shows true value in each scenario. \label{fig:sim_results}}
+  \end{figure}
+%TC:endignore
+
+\section{Discussion} \label{sec:discussion}
+Accurate assessments of postexposure effectiveness of vaccines could be useful for curbing the worst sequelae of many pathogens, but trials are often infeasible or unethical. Here, we specified target trials for postexposure vaccination and describe how to emulate them using observational data. Using the example of mpox vaccines, we discussed some of the unique challenges of emulating postexposure vaccination trials, including the central role played by the distribution of vaccination times and the incubation period. Throughout we emphasize the clarifying role of the target trial framework and conclude with simulations showing how emulating the trial can help avoid several common biases in observational analyses. 
+
+Previous studies have emulated trials of pre-exposure vaccines, particularly during the COVID-19 pandemic \cite{dagan_bnt162b2_2021,dickerman_comparative_2022,cohen-stavi_bnt162b2_2022,barda_effectiveness_2021}. These studies filled gaps in the literature by emulating trials which were not feasible to implement in practice such as head-to-head comparisons of vaccines \cite{dickerman_comparative_2022}, effectiveness against new variants \cite{cohen-stavi_bnt162b2_2022}, effectiveness of boosters \cite{barda_effectiveness_2021,magen_fourth_2022}, and effectiveness in important subgroups such as children \cite{cohen-stavi_bnt162b2_2022} and the immunocompromised. Observational emulations of post-exposure vaccines could perform a similar function.
+ 
+We considered postexposure trials where the goal of vaccination is to prevent the onset of clinical disease. However, other goals such as reducing severity or transmission are also possible. In rich observational datasets multiple primary and secondary endpoints may be feasible. To emulate trials in which the goal is to reduce severity, one could simply replace onset with an alternative outcome such as hospitalization or death due to disease of interest in the trials outlined above. Emulating a trial of the effect of postexposure vaccination on transmission would require close follow up or even random testing of the contacts of the vaccinated and unvaccinated participants and may be compromised by changes in exposure behaviors due to lack of blinding in most observational settings. However, if PCR tests were administered to everyone independent of symptoms, effectiveness against infection (PCR-positivity) is a lower bound on effectiveness against transmission \cite{lipsitch_interpreting_2021}. 
+
+%Beyond estimating postexposure effectiveness, another goal of a postexposure trial could be to determine the maximum vaccination delay before effectiveness falls below a certain cost-benefit threshold. This quantity is important both for policymakers communicating with high-risk groups and the broader public about what to do in the event of an exposure as well as to help practitioners determine whether vaccination is still indicated. Given sufficient sample size, estimates of ``real world'' effectiveness of postexposure vaccination could be produced for several possible vaccination delay strategies. In section \ref{sec:maxdelay} of the Appendix, we develop a formal counterfactual framework for the maximum delay and provide additional details on how to estimate it using data from an observational emulation.
+
+\clearpage
+
+\newpage
+%TC:ignore
+
+\printbibliography
+
+\clearpage
+
+\input{supplement.tex}
+%TC:endignore
+
+\onehalfspacing
+
+\end{document}
