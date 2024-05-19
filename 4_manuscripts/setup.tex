@@ -27,8 +27,11 @@
     authblk,
     makecell,
     threeparttable,
-    pgfplots}
+    pgfplots,
+    minitoc,
+    tocbasic}
 
+\usepackage[page]{appendix} % print appendices title
 
 \usepackage[
     backend=biber,
@@ -40,6 +43,15 @@
     eprint=false
 ]{biblatex}
 
+% Make the "Part I" text invisible
+\renewcommand \thepart{}
+\renewcommand \partname{}
+\DeclareTOCStyleEntry[dynnumwidth=true,
+                      numsep=1em,
+]{tocline}{section}
+\DeclareTOCStyleEntry[dynnumwidth=true,
+                      numsep=1em,
+]{tocline}{subsection}
 \AtEveryBibitem{%
   \clearfield{note}%
 }
