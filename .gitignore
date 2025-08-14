@@ -62,3 +62,7 @@ keya.*
 nyc_mpox/
 
 __archive/
+
+4_manuscripts/
+
+._wordcount*
