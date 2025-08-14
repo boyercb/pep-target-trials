@@ -29,6 +29,16 @@ plnormt <- function(q, range, meanlog, sdlog) {
   (plnorm(q, meanlog, sdlog) - a) / (b - a)
 }
 
+colSds <- function(x, na.rm=TRUE) {
+  if (na.rm) {
+    n <- colSums(!is.na(x)) # thanks @flodel
+  } else {
+    n <- nrow(x)
+  }
+  colVar <- colMeans(x*x, na.rm=na.rm) - (colMeans(x, na.rm=na.rm))^2
+  return(sqrt(colVar * n/(n-1)))
+}
+
 
 # data generation function ------------------------------------------------
 
@@ -97,9 +107,24 @@ gendata <-
 
 # simulation function -----------------------------------------------------
 
-runsim <- function(d, p, hetero = FALSE, compare_regimes = FALSE) {
-  p()
+bootfun <- function(d, i, hetero, compare_regimes, msg = FALSE) {
+  db <- d[i, ]
+  db$id <- 1:nrow(db)
   
+  res <- runsim(db, NULL, hetero, compare_regimes, se = FALSE)
+  
+  if (msg) {
+    print(str(res))
+  }
+  
+  return(res)
+}
+
+runsim <- function(d, p, hetero = FALSE, compare_regimes = FALSE, se = FALSE, R = 1000) {
+  if (!is.null(p)) {
+    p()
+  }
+
   if (compare_regimes) {
     # 7-day fixed enrollment period
     d_fixed <- 
@@ -325,7 +350,7 @@ runsim <- function(d, p, hetero = FALSE, compare_regimes = FALSE) {
       )
     )
     
-    unlist(lapply(ret, function(x) 1 - exp(x)))
+    ret <- unlist(lapply(ret, function(x) x))
   
   } else {
     # 21-day fixed enrollment period design
@@ -402,7 +427,7 @@ runsim <- function(d, p, hetero = FALSE, compare_regimes = FALSE) {
         )
       })
       
-      unlist(map(fits, 
+      ret <- unlist(map(fits, 
                  function(f, idx) {
                    lp1 <- predict(
                      f,
@@ -432,7 +457,7 @@ runsim <- function(d, p, hetero = FALSE, compare_regimes = FALSE) {
                      type = "term"
                    ) |> rowSums() 
                    
-                   1 - exp(lp1 - lp0)
+                   lp1 - lp0
                  }))
       
     } else {
@@ -484,7 +509,7 @@ runsim <- function(d, p, hetero = FALSE, compare_regimes = FALSE) {
         )
       })
       
-      pmap_dbl(
+      ret <- pmap_dbl(
         list(
           f = fits,
           idx = c(2, 2, 1, 2, 2, 2, 1), 
@@ -492,13 +517,47 @@ runsim <- function(d, p, hetero = FALSE, compare_regimes = FALSE) {
         ),
         function(f, idx, c) {
           if (c) {
-            1 - exp(coef(f)[idx])
+            coef(f)[idx]
           } else {
-            1 - exp(f)
+            f
           }
         }
       )
     }
+  }
+  
+  if (se) {
+    
+    bt <-
+      boot(
+        data = d,
+        statistic = bootfun,
+        R = R,
+        parallel = "multicore",
+        ncpus = 1, #detectCores() - 1,
+        hetero = hetero,
+        compare_regimes = compare_regimes,
+        msg = FALSE
+      )
+    
+    #print(runsim(d[sample(.N, .N, replace = TRUE)][, id := 1:.N], NULL, hetero, compare_regimes, se = FALSE))
+    # bt <- mclapply(
+    #   1:R,
+    #   function(iter, d, hetero, compare_regimes) {
+    #     db <- d[sample(.N, .N, replace = TRUE)][, id := 1:.N]
+    #     res <- runsim(db, NULL, hetero, compare_regimes, se = FALSE)
+    #     return(res)
+    #   },
+    #   d = d,
+    #   hetero = hetero,
+    #   compare_regimes = compare_regimes,
+    #   mc.cores = detectCores() - 1
+    # )
+
+    ret_se <- colSds(bt$t)
+    list("est" = ret, "se" = ret_se)
+  } else {
+    list("est" = ret)
   }
 }
 

@@ -235,7 +235,7 @@ sim_overlap_df <-
   )
 
 p1 <- ggplot(
-  filter(sim_overlap_df, rr == 0), 
+  filter(sim_overlap_df, rr == 1), 
   aes(x = type, y = VE, fill = type)
 ) +
   facet_wrap(~flab, labeller = label_parsed) +

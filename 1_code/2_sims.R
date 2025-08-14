@@ -17,8 +17,11 @@ if (rerun_sim1) {
     p <- progressor(steps = N_SIMS)
     p("scenario 1: VE = 0%", class = "sticky")
     
-    sim0 <- dgp0[, .(
-      VE = unlist(runsim(.SD, p)),
+    sim0 <- dgp0[, runsim(.SD, p, se = TRUE, R = R), by = sim][, .(
+      est = est,
+      se = se,
+      lwr = est + qnorm(0.025) * se,
+      upr = est + qnorm(0.975) * se,
       truth = 0,
       type = c("leave",
                "move",
@@ -31,16 +34,16 @@ if (rerun_sim1) {
   })
   
   sim0_results <-
-    sim0[, .(est = mean(VE),
-             bias = mean(VE - mean(truth)),
-             sd = sd(VE),
-             rmse = sqrt(mean((VE - mean(truth))^2))
+    sim0[, .(est = mean(est),
+             VE = mean(1 - exp(est)),
+             bias = mean(est - mean(truth)),
+             ese = mean(se),
+             sd = sd(est),
+             rmse = sqrt(mean((est - mean(truth))^2)),
+             coverage = mean(lwr < truth & truth < upr)
     ),
     by = list(type)]
 }
-
-
-
 
 
 # scenario 2: VE = 40% ----------------------------------------------------
@@ -52,8 +55,11 @@ if (rerun_sim2) {
     p <- progressor(steps = N_SIMS)
     p("scenario 2: VE = 40%", class = "sticky")
     
-    sim40 <- dgp40[, .(
-      VE = unlist(runsim(.SD, p)),
+    sim40 <- dgp40[, runsim(.SD, p, se = TRUE, R = R), by = sim][, .(
+      est = est,
+      se = se,
+      lwr = est + qnorm(0.025) * se,
+      upr = est + qnorm(0.975) * se,
       truth = c(rep(0.4, 4), rep(calc_true_rr(0.4), 3)),
       type = c("leave",
                "move",
@@ -66,10 +72,13 @@ if (rerun_sim2) {
   })
   
   sim40_results <- 
-    sim40[, .(est = mean(VE),
-              bias = mean(VE - mean(truth)),
-              sd = sd(VE),
-              rmse = sqrt(mean((VE - mean(truth))^2))
+    sim40[, .(est = mean(est),
+              VE = mean(1 - exp(est)),
+              bias = mean(est - mean(truth)),
+              ese = mean(se),
+              sd = sd(est),
+              rmse = sqrt(mean((est - mean(truth))^2)),
+              coverage = mean(lwr < truth & truth < upr)
     ),
     by = list(type)]
 }
@@ -143,24 +152,31 @@ if (rerun_sim4) {
     p <- progressor(steps = N_SIMS * length(meanlogs))
     p("scenario 4: overlap", class = "sticky")
     
-    sim_overlap <- dgp_overlap[, .(
-      VE = unlist(runsim(.SD, p)),
-      truth = 0,
-      type = c("leave",
-               "move",
-               "cox",
-               "target_trial",
-               "leave_rr",
-               "move_rr",
-               "target_trial_rr")
-    ), by = list(meanlog, sim)]
-  })
+    sim_overlap <- 
+      dgp_overlap[, runsim(.SD, p, se = FALSE), by = list(meanlog, sim)][, .(
+        est = est,
+        se = se,
+        lwr = est + qnorm(0.025) * se,
+        upr = est + qnorm(0.975) * se,
+        truth = 0,
+        type = c("leave",
+                 "move",
+                 "cox",
+                 "target_trial",
+                 "leave_rr",
+                 "move_rr",
+                 "target_trial_rr")
+      ), by = list(meanlog, sim)]
+    })
   
   sim_overlap_results <-
-    sim_overlap[, .(est = mean(VE),
-                    bias = abs(mean(VE) - mean(truth)),
-                    sd = sd(VE),
-                    rmse = sqrt(mean((VE - mean(truth))^2))
+    sim_overlap[, .(est = mean(est),
+                    VE = mean(1 - exp(est)),
+                    bias = mean(est - mean(truth)),
+                    ese = mean(se),
+                    sd = sd(est),
+                    rmse = sqrt(mean((est - mean(truth))^2)),
+                    coverage = mean(lwr < truth & truth < upr)
     ),
     by = list(meanlog, type)]
 }
