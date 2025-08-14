@@ -1,17 +1,51 @@
-
-\begin{tabular}{lcccc}
-\toprule
-Estimator & Mean & Bias & SD & RMSE\\
-\midrule
-\addlinespace[0.3em]
-\multicolumn{5}{l}{\textit{Scenario 1: VE = 0\%}}\\
-\hspace{1em}naive, leave & 0.090 & 0.090 & 0.059 & 0.108\\
-\hspace{1em}naive, move & 0.120 & 0.120 & 0.058 & 0.133\\
-\hspace{1em}target trial & -0.004 & -0.004 & 0.067 & 0.067\\
-\addlinespace[0.3em]
-\multicolumn{5}{l}{\textit{Scenario 2: VE = 31.6\%}}\\
-\hspace{1em}naive, leave & 0.377 & 0.060 & 0.050 & 0.078\\
-\hspace{1em}naive, move & 0.407 & 0.091 & 0.049 & 0.103\\
-\hspace{1em}target trial & 0.317 & 0.000 & 0.057 & 0.057\\
-\bottomrule
-\end{tabular}
+\begin{tabular}{lccccc}
+    \toprule
+    Estimator & \makecell[c]{Mean\\Estimate} & Bias & ASE & ESE & \makecell[c]{95\% CI\\Coverage}\\
+    \midrule
+    \addlinespace[0.3em]
+    \multicolumn{6}{l}{\textit{$VE_\lambda$ = 0\% and $\mu = 3$}}\\
+    \hspace{1em}naive, leave & -0.109 & -0.109 & 0.033 & 0.034 & 0.088\\
+    \hspace{1em}naive, move & -0.151 & -0.151 & 0.036 & 0.036 & 0.006\\
+    \hspace{1em}target trial & -0.004 & -0.004 & 0.043 & 0.043 & 0.950\\
+    \addlinespace[0.3em]
+    \multicolumn{6}{l}{\textit{$VE_\lambda$ = 0\% and $\mu = 9$}}\\
+    \hspace{1em}naive, leave & -0.092 & -0.092 & 0.069 & 0.071 & 0.718\\
+    \hspace{1em}naive, move & -0.123 & -0.123 & 0.069 & 0.071 & 0.566\\
+    \hspace{1em}target trial & 0.001 & 0.001 & 0.076 & 0.076 & 0.958\\
+    \addlinespace[0.3em]
+    \multicolumn{6}{l}{\textit{$VE_\lambda$ = 0\% and $\mu = 15$}}\\
+    \hspace{1em}naive, leave & -0.049 & -0.049 & 0.106 & 0.103 & 0.926\\
+    \hspace{1em}naive, move & -0.069 & -0.069 & 0.107 & 0.103 & 0.904\\
+    \hspace{1em}target trial & 0.010 & 0.010 & 0.111 & 0.107 & 0.962\\
+    \addlinespace[0.3em]
+    \multicolumn{6}{l}{\textit{$VE_\lambda$ = 40\% and $\mu = 3$}}\\
+    \hspace{1em}naive, leave & -0.349 & -0.063 & 0.045 & 0.044 & 0.736\\
+    \hspace{1em}naive, move & -0.430 & -0.144 & 0.050 & 0.050 & 0.182\\
+    \hspace{1em}target trial & -0.299 & -0.013 & 0.055 & 0.055 & 0.936\\
+    \addlinespace[0.3em]
+    \multicolumn{6}{l}{\textit{$VE_\lambda$ = 40\% and $\mu = 9$}}\\
+    \hspace{1em}naive, leave & -0.480 & -0.078 & 0.084 & 0.089 & 0.834\\
+    \hspace{1em}naive, move & -0.526 & -0.124 & 0.085 & 0.090 & 0.672\\
+    \hspace{1em}target trial & -0.420 & -0.019 & 0.091 & 0.097 & 0.914\\
+    \addlinespace[0.3em]
+    \multicolumn{6}{l}{\textit{$VE_\lambda$ = 40\% and $\mu = 15$}}\\
+    \hspace{1em}naive, leave & -0.502 & -0.051 & 0.126 & 0.126 & 0.928\\
+    \hspace{1em}naive, move & -0.529 & -0.078 & 0.127 & 0.126 & 0.900\\
+    \hspace{1em}target trial & -0.460 & -0.009 & 0.131 & 0.130 & 0.944\\
+    \addlinespace[0.3em]
+    \multicolumn{6}{l}{\textit{$VE_\lambda$ = 80\% and $\mu = 3$}}\\
+    \hspace{1em}naive, leave & -1.006 & 0.123 & 0.078 & 0.081 & 0.624\\
+    \hspace{1em}naive, move & -1.267 & -0.138 & 0.097 & 0.098 & 0.696\\
+    \hspace{1em}target trial & -1.151 & -0.023 & 0.099 & 0.101 & 0.954\\
+    \addlinespace[0.3em]
+    \multicolumn{6}{l}{\textit{$VE_\lambda$ = 80\% and $\mu = 9$}}\\
+    \hspace{1em}naive, leave & -1.397 & -0.012 & 0.135 & 0.131 & 0.960\\
+    \hspace{1em}naive, move & -1.521 & -0.136 & 0.143 & 0.143 & 0.880\\
+    \hspace{1em}target trial & -1.432 & -0.047 & 0.147 & 0.147 & 0.940\\
+    \addlinespace[0.3em]
+    \multicolumn{6}{l}{\textit{$VE_\lambda$ = 80\% and $\mu = 15$}}\\
+    \hspace{1em}naive, leave & -1.524 & -0.036 & 0.201 & 0.194 & 0.974\\
+    \hspace{1em}naive, move & -1.588 & -0.099 & 0.206 & 0.200 & 0.950\\
+    \hspace{1em}target trial & -1.530 & -0.042 & 0.209 & 0.203 & 0.970\\
+    \bottomrule
+    \end{tabular}
